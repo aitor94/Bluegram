@@ -19,6 +19,7 @@ public class Main extends Application
 			Scene scene=new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
+			primaryStage.setTitle("Bluegram v1.0");
 			primaryStage.show();
 		} 
 		catch(Exception e) 

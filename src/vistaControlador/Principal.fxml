@@ -27,5 +27,11 @@
          <children>
             <Label layoutX="62.0" layoutY="67.0" text="Salir" />
          </children></Pane>
+      <Line endX="150.0" startX="150.0" startY="300.0" strokeWidth="3.0" />
+      <Line endX="150.0" rotate="90.0" startX="150.0" startY="300.0" strokeWidth="3.0" />
+      <Line endX="150.0" layoutX="150.0" startX="150.0" startY="300.0" strokeWidth="6.0" />
+      <Line endX="150.0" layoutX="-150.0" startX="150.0" startY="300.0" strokeWidth="6.0" />
+      <Line endX="150.0" layoutY="150.0" rotate="90.0" startX="150.0" startY="300.0" strokeWidth="6.0" />
+      <Line endX="150.0" layoutY="-150.0" rotate="90.0" startX="150.0" startY="300.0" strokeWidth="6.0" />
    </children>
 </AnchorPane>

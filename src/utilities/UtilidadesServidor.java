@@ -5,23 +5,21 @@ import org.jivesoftware.smack.SmackConfiguration;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 
-public class UtilidadesServidor 
-{
-	public static XMPPTCPConnection ServerConnection(String user,String pass)
-	{
+public class UtilidadesServidor {
+	
+	public static XMPPTCPConnection ServerConnection (String user,String pass) {
 		SmackConfiguration.DEBUG = true;
 		XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
 				  .setUsernameAndPassword(user,pass)
-				  .setServiceName("MacBook-Pro-de-aitor.local")
-				  .setHost("MacBook-Pro-de-aitor.local")
+				  .setServiceName("jorge-hp")
+				  .setHost("Jorge-HP")
 				  .setPort(5222)
 				  .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
 				  .setCompressionEnabled(false)
 				  .setSendPresence(true)
 				  .build();
 		
-		
 		XMPPTCPConnection con = new XMPPTCPConnection(config);
-		return con;		
+		return con;
 	}
 }

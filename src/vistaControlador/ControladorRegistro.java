@@ -1,9 +1,7 @@
 package vistaControlador;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javax.naming.NamingException;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
@@ -11,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -19,11 +16,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import nl.captcha.Captcha;
-import server.EJBInterface;
 import utilities.BD;
 import utilities.UtilidadRegistro;
+import utilities.UtilidadesOtros;
 
 public class ControladorRegistro implements Initializable
 {
@@ -43,6 +41,7 @@ public class ControladorRegistro implements Initializable
 	private ImageView img;
 
 	private String answer;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
@@ -62,17 +61,17 @@ public class ControladorRegistro implements Initializable
 		boton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
-			public void handle(MouseEvent event) 
-			{
-				if(nombre.getText().isEmpty() || correo.getText().isEmpty() || pass.getText().isEmpty())
-				{
-					lanzaAlerta("Todos los campos son obligatorios");
+			public void handle(MouseEvent event) {
+				
+				if (nombre.getText().isEmpty() || correo.getText().isEmpty() || pass.getText().isEmpty()) {
+					UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Todos los campos son obligatorios");
 				}
+				
 				else
 				{
-					if(pass.getText().equals(confPass.getText()))
+					if (pass.getText().equals(confPass.getText()))
 					{
-						if(answer.equals(capt.getText()))
+						if (answer.equals(capt.getText()))
 						{
 							try 
 							{
@@ -82,11 +81,12 @@ public class ControladorRegistro implements Initializable
 								{
 									BD bd = new BD();
 									
-									if(bd.existeUsuario(nombre.getText())==false)
+									if (bd.existeUsuario(nombre.getText()) == false)
 									{
-										FXMLLoader loader=new FXMLLoader();
+										FXMLLoader loader = new FXMLLoader();
 										loader.setLocation(ControladorRegistro.class.getResource("/vistaControlador/RegistroFinal.fxml"));
-										Scene escena = new Scene(loader.load());
+										AnchorPane ap = loader.load();
+										Scene escena = new Scene(ap);
 										
 										ControladorRegistroFinal ctrl = loader.getController();
 										ctrl.setCode(ur.busquedaEJB().sendEmail(correo.getText()));
@@ -94,56 +94,42 @@ public class ControladorRegistro implements Initializable
 										ctrl.setPassword(pass.getText());
 										ctrl.setEmail(correo.getText());
 										
-										Stage stg=(Stage)boton.getScene().getWindow();
+										Stage stg = (Stage) boton.getScene().getWindow();
 										stg.setScene(escena);
 										stg.show();
 									}
 									else
 									{
-										lanzaAlerta("Ya existe un usuario con ese nombre, prueba con otro");
+										UtilidadesOtros.alerta(AlertType.ERROR, "Error", 
+												"Ya existe un usuario con ese nombre, prueba con otro");
 										nombre.setText("");
 									}
 								}
 								else
 								{
-									lanzaAlerta("Email no valido");
+									UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Email no valido");
 									correo.setText("");
 								}
 								
-							} 
-							catch (NamingException e) 
-							{
-								e.printStackTrace();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+							} catch (Exception e) {
+								UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Error");
 							}
 						}
 						else
 						{
-							lanzaAlerta("Captcha incorrecto");
+							UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Captcha incorrecto");
 							capt.setText("");
 						}
 					}
 					else
 					{
-						lanzaAlerta("Las contraseÃ±as no coinciden");
+						UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Las contraseñas no coinciden");
 						pass.setText("");
 						confPass.setText("");
 					}
 				}
 			}
 		});
-	}
-	
-	private void lanzaAlerta(String descripcion)
-	{
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Error");
-		alert.setHeaderText(null);
-		alert.setContentText(descripcion);
-
-		alert.showAndWait();
 	}
 
 }

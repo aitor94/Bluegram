@@ -16,16 +16,12 @@ import org.jivesoftware.smackx.iqregister.AccountManager;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import main.Main;
+import utilities.UtilidadesOtros;
 import utilities.UtilidadesServidor;
 
 public class ControladorRegistroFinal implements Initializable
@@ -44,71 +40,43 @@ public class ControladorRegistroFinal implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
-			boton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		boton.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-				@Override
-				public void handle(MouseEvent event) 
-				{
-					if(code.equals(codigo.getText()))
-					{
-						XMPPTCPConnection con = UtilidadesServidor.ServerConnection("admin","admin");
-						
-						try 
-						{
-							con.connect();
-						} 
-						catch (SmackException | IOException | XMPPException e2) 
-						{
-							// TODO Auto-generated catch block
-							e2.printStackTrace();
-						}
-						AccountManager am = AccountManager.getInstance(con);
-						
-						Map<String,String> attr = new HashMap<String,String>();
-						attr.put("email",email);
-						
-						try 
-						{
-							am.createAccount(name, password,attr);
-						} 
-						catch (NoResponseException | XMPPErrorException | NotConnectedException e1) 
-						{
-							e1.printStackTrace();
-						}
-						
-						Alert alert = new Alert(AlertType.CONFIRMATION);
-						alert.setTitle("Exito");
-						alert.setHeaderText(null);
-						alert.setContentText("Registro completado con exito!!!!!!");
-
-						alert.showAndWait();
-						
-						FXMLLoader loader=new FXMLLoader();
-						loader.setLocation(Main.class.getResource("/vistaControlador/Principal.fxml"));
-						Scene escena=null;
-						try 
-						{
-							escena = new Scene(loader.load());
-						} 
-						catch (IOException e) 
-						{
-							e.printStackTrace();
-						}
-						Stage stg=(Stage)boton.getScene().getWindow();
-						stg.setScene(escena);
-						stg.show();
+			@Override
+			public void handle(MouseEvent event) {
+				
+				if (code.equals(codigo.getText())) {
+					
+					XMPPTCPConnection con = UtilidadesServidor.ServerConnection("admin", "admin");
+					
+					try	{
+						con.connect();
+					} 
+					catch (SmackException | IOException | XMPPException e) {
+						UtilidadesOtros.alerta(AlertType.ERROR, "Error de conexion", "Error de conexion");
 					}
-					else
-					{
-						Alert alert = new Alert(AlertType.WARNING);
-						alert.setTitle("Fallo");
-						alert.setHeaderText(null);
-						alert.setContentText("La clave no es correcta");
-
-						alert.showAndWait();
+						
+					AccountManager am = AccountManager.getInstance(con);
+					
+					Map<String,String> attr = new HashMap<String,String>();
+					attr.put("email", email);
+					
+					try {
+						am.createAccount(name, password, attr);
+					} 
+					catch (NoResponseException | XMPPErrorException | NotConnectedException e) {
+						UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Error al crear cuenta");
 					}
+					
+					UtilidadesOtros.alerta(AlertType.CONFIRMATION, "¡Exito!", "¡Registro completado con exito!");
+					UtilidadesOtros.ventanaFXML("/vistaControlador/Principal.fxml", boton.getScene());
+					
 				}
-			});
+				else {
+					UtilidadesOtros.alerta(AlertType.ERROR, "Fallo de autenticacion", "¡La clave no es correcta!");
+				}
+			}
+		});
 	}
 
 	public String getCode() {

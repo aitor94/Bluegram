@@ -6,6 +6,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import javafx.scene.control.Alert.AlertType;
 import server.EJBInterface;
 
 public class UtilidadRegistro 
@@ -25,8 +26,7 @@ public class UtilidadRegistro
 		try {
 			contexto = new InitialContext(prop);
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Error contexto EJB");
+			UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Error contexto EJB");
 		}
 		
 		return (EJBInterface) contexto.lookup("/ValidationEJB/EJB!server.EJBInterface");			

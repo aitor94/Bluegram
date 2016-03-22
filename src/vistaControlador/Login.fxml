@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vistaControlador.ControladorLogin">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="91.0" layoutY="96.0" text="Usuario" />
+            <Label layoutX="71.0" layoutY="126.0" text="Contraseña" />
+            <TextField fx:id="usuario" layoutX="146.0" layoutY="91.0" />
+            <PasswordField fx:id="pass" layoutX="146.0" layoutY="124.0" />
+            <CheckBox fx:id="recordar" layoutX="220.0" layoutY="159.0" mnemonicParsing="false" text="Recordar" />
+            <Label fx:id="usuarioVacio" layoutX="91.0" layoutY="70.0" text="El campo Usuario no puede estar vacio" textFill="RED" visible="false" />
+            <Label fx:id="passVacio" layoutX="69.0" layoutY="68.0" text="El campo Contraseña no puede estar vacio" textFill="RED" visible="false" /> 
+            <Button fx:id="conectar" layoutX="146.0" layoutY="201.0" mnemonicParsing="false" text="Conectar" />
+            <ProgressIndicator fx:id="iconoCargando" layoutX="283.0" layoutY="196.0" prefHeight="36.0" prefWidth="30.0" visible="false" />
+            <Label layoutX="69.0" layoutY="298.0" text="¡No tienes una cuenta! -&gt; " />
+            <Button fx:id="registrar" layoutX="229.0" layoutY="293.0" mnemonicParsing="false" text="¡Registrate!" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

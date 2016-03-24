@@ -36,11 +36,10 @@ public class UtilidadesOtros {
 	}
 	
 	public static void ventanaFXML (String url, Scene escena) {
-		
 		Scene scene = escenaFXML(url);
 		Stage stg = (Stage) escena.getWindow();
 		stg.setScene(scene);
-		stg.show();		
+		stg.show();	
 	}	
 	
 	public static void alerta (AlertType tipo, String titulo, String texto) {
@@ -79,6 +78,5 @@ public class UtilidadesOtros {
 			userpass = null;			
 		} 			
 		return userpass;
-	}
-	
+	}	
 }

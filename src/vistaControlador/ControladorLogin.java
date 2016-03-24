@@ -8,6 +8,8 @@ import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,6 +35,8 @@ public class ControladorLogin implements Initializable {
 	@FXML private Button registrar;
 	@FXML private ProgressIndicator iconoCargando;
 	
+	private Task<Void> task;
+	
 	public static XMPPTCPConnection scon;
 
 	@Override
@@ -44,36 +48,34 @@ public class ControladorLogin implements Initializable {
 			pass.setText(userpass[1]);
 		}
 		
-		conectar.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event)
-			{
-				usuarioVacio.setVisible(false);
+		task = new Task<Void>() 
+		{
+		    @Override public Void call() 
+		    {
+		    	boolean correcto=true;
+		    	
+		    	usuarioVacio.setVisible(false);
 				passVacio.setVisible(false);
 				
 				if (usuario.getText().isEmpty()) {
 					usuarioVacio.setVisible(true);
-					return;
+					correcto=false;
 				}
 				
 				if (pass.getText().isEmpty()) {
 					passVacio.setVisible(true);
-					return;
+					correcto=false;
 				}
 				
 				if (recordar.isSelected()) UtilidadesOtros.guardarEnFichero(usuario.getText(), pass.getText());
 				
-				XMPPTCPConnection sc = UtilidadesServidor.ServerConnection(usuario.getText(), pass.getText());
+				UtilidadesServidor.scon = UtilidadesServidor.ServerConnection(usuario.getText(), pass.getText());
 				
 				try {
-					iconoCargando.setVisible(true);
-					
-					sc.connect();
-					sc.login();
-					scon = sc;
-					
-					UtilidadesOtros.ventanaFXML("/vista/Chat.fxml", conectar.getScene()); /* Todavia no existe */
+					if(correcto){
+						UtilidadesServidor.scon.connect();
+						UtilidadesServidor.scon.login();
+					}
 				}
 				
 				catch (SmackException e) {
@@ -91,6 +93,25 @@ public class ControladorLogin implements Initializable {
 				finally {
 					iconoCargando.setVisible(false);
 				}
+				return null;			        
+		    }
+		};
+		
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+	        @Override
+	        public void handle(WorkerStateEvent t)
+	        {
+	        	UtilidadesOtros.ventanaFXML("/vistaControlador/Chat.fxml", usuario.getScene());
+	        }
+	    });
+		
+		conectar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event)
+			{
+				iconoCargando.setVisible(true);
+				new Thread(task).start();
 			}
 				
 		});

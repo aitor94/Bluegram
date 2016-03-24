@@ -7,12 +7,14 @@ import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 
 public class UtilidadesServidor {
 	
+	public static XMPPTCPConnection scon;
+	
 	public static XMPPTCPConnection ServerConnection (String user,String pass) {
 		SmackConfiguration.DEBUG = true;
 		XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
 				  .setUsernameAndPassword(user,pass)
-				  .setServiceName("jorge-hp")
-				  .setHost("Jorge-HP")
+				  .setServiceName("macbook-pro-de-aitor.local")
+				  .setHost("macbook-pro-de-aitor.local")
 				  .setPort(5222)
 				  .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
 				  .setCompressionEnabled(false)

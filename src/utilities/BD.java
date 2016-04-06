@@ -1,9 +1,14 @@
 package utilities;
 
+import java.math.BigInteger;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.jivesoftware.smack.packet.Message;
 
 import javafx.scene.control.Alert.AlertType;
+import modelo.MessageArchive;
 
 public class BD {
 	
@@ -12,7 +17,8 @@ public class BD {
 	public static final String password = "1234";
 	public static final String url = "jdbc:mysql://localhost/" + bd;
 	   
-	private Connection connection;  
+	private Connection connection;
+	private Statement statement;
 	
 	public BD() {
 		
@@ -76,6 +82,47 @@ public class BD {
 		}
 		return exis;
 	}
+	
+	public List<MessageArchive> getMensajes() {
+
+		ResultSet resultado;
+		List<MessageArchive> mensajes = new ArrayList<MessageArchive>();
+		String instruccion = "SELECT * FROM opf.ofMessageArchive";
+		try {
+
+			statement = connection.createStatement();
+			resultado = statement.executeQuery(instruccion);
+
+			while (resultado.next()) {
+
+				MessageArchive ma = new MessageArchive();
+				Message msg = new Message();
+				
+				ma.setBody(resultado.getString("body"));
+				ma.setConversationID(BigInteger.valueOf(resultado.getLong("conversationID")));
+				ma.setFromJID(resultado.getString("fromJID"));
+				ma.setFromJIDResource(resultado.getString("fromJIDResource"));
+				ma.setMessageID(BigInteger.valueOf(resultado.getLong("messageID")));
+				ma.setSentDate(BigInteger.valueOf(resultado.getLong("sentDate")));
+				ma.setStanza(resultado.getString("stanza"));
+				ma.setToJID(resultado.getString("toJID"));
+				ma.setToJIDResource(resultado.getString("toJIDResource"));
+				
+				msg.setBody(resultado.getString("body"));
+				msg.setFrom(resultado.getString("fromJID"));
+				
+				mensajes.add(ma);
+			}
+
+		} catch (Exception e) {
+			System.out.print("ERROR MySQL, consultando mensajes ---> " + e + "\n");
+			e.printStackTrace();
+			mensajes = null;
+		}
+
+		return mensajes;
+	}
+	
 	
 	public void cerrarConexion() throws SQLException {
 		connection.close();

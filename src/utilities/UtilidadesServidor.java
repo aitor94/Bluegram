@@ -18,7 +18,7 @@ public class UtilidadesServidor {
 				  .setPort(5222)
 				  .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
 				  .setCompressionEnabled(false)
-				  .setSendPresence(true)
+				  .setSendPresence(false)
 				  .build();
 		
 		XMPPTCPConnection con = new XMPPTCPConnection(config);

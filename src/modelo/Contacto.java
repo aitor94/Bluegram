@@ -1,12 +1,16 @@
 package modelo;
 
+import java.util.List;
+
 import org.jivesoftware.smack.chat.Chat;
+import org.jivesoftware.smack.packet.Message;
 
 public class Contacto 
 {
 	private String id;
 	private String nombre;
 	private String presencia;
+	private List<Message> mensajes;
 	private Chat chat;
 	
 	public String getId() {
@@ -32,5 +36,16 @@ public class Contacto
 	}
 	public void setChat(Chat chat) {
 		this.chat = chat;
+	}
+	public List<Message> getMensajes() {
+		return mensajes;
+	}
+	public void setMensajes(List<Message> mensajes) {
+		this.mensajes = mensajes;
+	}
+	
+	public void addMessage(Message mensaje)
+	{
+		mensajes.add(mensaje);
 	}
 }

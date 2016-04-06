@@ -104,6 +104,7 @@ public class ControladorRegistro implements Initializable
 												"Ya existe un usuario con ese nombre, prueba con otro");
 										nombre.setText("");
 									}
+									bd.cerrarConexion();
 								}
 								else
 								{
@@ -123,7 +124,7 @@ public class ControladorRegistro implements Initializable
 					}
 					else
 					{
-						UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Las contraseñas no coinciden");
+						UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Las contraseï¿½as no coinciden");
 						pass.setText("");
 						confPass.setText("");
 					}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vistaControlador.ControladorConversacion">
+   <children>
+      <Pane layoutX="38.0" layoutY="78.0" prefHeight="369.0" prefWidth="275.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextArea fx:id="texto" layoutY="283.0" prefHeight="46.0" prefWidth="200.0" wrapText="true" />
+            <Button fx:id="enviar" layoutX="200.0" layoutY="283.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="59.0" text="Button" />
+            <Label fx:id="contacto" layoutX="-2.0" layoutY="14.0" prefHeight="17.0" prefWidth="275.0" />
+            <ListView fx:id="msgs" layoutX="7.0" layoutY="31.0" prefHeight="241.0" prefWidth="262.0" />
+         </children>
+      </Pane>
+      <AnchorPane layoutX="261.0" layoutY="-153.0" prefHeight="0.0" prefWidth="200.0" />
+      <TextField fx:id="verde" layoutX="245.0" layoutY="-48.0" maxWidth="200.0" prefHeight="27.0" prefWidth="200.0" style="-fx-background-color: #1eff72;" />
+      <TextField fx:id="azul" layoutX="245.0" layoutY="-95.0" maxWidth="200.0" prefHeight="27.0" prefWidth="200.0" style="-fx-background-color: #1fadff;" />
+   </children>
+</AnchorPane>

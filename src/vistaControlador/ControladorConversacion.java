@@ -4,8 +4,14 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.jivesoftware.smack.SmackException.NotConnectedException;
+import org.jivesoftware.smack.chat.Chat;
+import org.jivesoftware.smack.chat.ChatManager;
+import org.jivesoftware.smack.chat.ChatManagerListener;
+import org.jivesoftware.smack.chat.ChatMessageListener;
 import org.jivesoftware.smack.packet.Message;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -18,26 +24,44 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import modelo.Contacto;
+import utilities.UtilidadesServidor;
 
-public class ControladorConversacion implements Initializable
-{
+public class ControladorConversacion implements Initializable {
 
-	@FXML private TextArea texto;
-	@FXML private Button enviar;
-	@FXML private Label contacto;
-	@FXML private ListView<TextField> msgs;
-	@FXML private TextField azul;
-	@FXML private TextField verde;
-	
+	@FXML
+	private TextArea texto;
+	@FXML
+	private Button enviar;
+	@FXML
+	private Label contacto;
+	@FXML
+	private ListView<String> msgs;
+	@FXML
+	private TextField azul;
+	@FXML
+	private TextField verde;
+
 	private Contacto persona;
-	private ObservableList<TextField> mensajes;
+	private ObservableList<String> mensajes;
+	private List<Message> listaMensajes;
 
 	public void setMsgs(List<Message> msgs) {
-		//aqui añado todos los mensajes al cargar la vista
+		this.listaMensajes = msgs;
+		ObservableList<String> lst = FXCollections.observableArrayList();
+		for (Message msg : msgs) {
+			lst.add(msg.getBody());
+		}
+		this.msgs.setItems(lst);
 	}
-	
+
 	public void setMsgs(Message msg) {
-		//aqui añado un mensaje cuando la vista ya esta cargada
+		ObservableList<String> lista = this.msgs.getItems();
+		lista.add(msg.getBody());
+		if (listaMensajes == null)
+			listaMensajes = FXCollections.observableArrayList();
+
+		listaMensajes.add(msg);
+		this.msgs.setItems(lista);
 	}
 
 	public Contacto getPersona() {
@@ -73,24 +97,62 @@ public class ControladorConversacion implements Initializable
 	}
 
 	public void setContacto(String contacto) {
-		
+
 		this.contacto.setText(contacto);
 	}
-	
+
 	@Override
-	public void initialize(URL location, ResourceBundle resources) 
-	{
+	public void initialize(URL location, ResourceBundle resources) {
 		mensajes = FXCollections.observableArrayList();
-		
+
+		ChatManager.getInstanceFor(UtilidadesServidor.scon).addChatListener(new ChatManagerListener() {
+			@Override
+			public void chatCreated(Chat chat, boolean createdLocally) {
+				chat.addMessageListener(new ChatMessageListener() {
+					@Override
+					public void processMessage(Chat chat, Message message) {
+						Platform.runLater(() -> {
+							mensajes.add(message.getBody());
+							msgs.setItems(mensajes);
+						});
+					}
+				});
+			}
+		});
+
 		enviar.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
-			public void handle(MouseEvent event) 
-			{
-				//aqui envio el mensaje
+			public void handle(MouseEvent event) {
+				String usuario = contacto.getText();
+				Message msg = new Message();
+
+				try {
+					msg.setBody(texto.getText());
+					persona.getChat().sendMessage(msg);
+					setMsgs(msg);
+					texto.clear();
+				} catch (NotConnectedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("Error al mandar chat");
+				}
 			}
-				
-		});	
+
+		});
+	}
+
+	public void setChat(String contacto) {
+		ChatManager chatmanager = ChatManager.getInstanceFor(UtilidadesServidor.scon);
+
+		Chat chat = chatmanager.createChat(contacto + "@mikel-virtualbox", new ChatMessageListener() {
+			public void processMessage(Chat chat, Message message) {
+
+				listaMensajes.add(message);
+			}
+		});
+
+		persona.setChat(chat);
 	}
 
 }

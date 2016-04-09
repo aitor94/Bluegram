@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jivesoftware.smack.chat.Chat;
@@ -46,6 +47,8 @@ public class Contacto
 	
 	public void addMessage(Message mensaje)
 	{
+		if(mensajes==null)
+			mensajes=new ArrayList<Message>();
 		mensajes.add(mensaje);
 	}
 }

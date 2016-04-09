@@ -37,7 +37,6 @@ public class ControladorLogin implements Initializable {
 	
 	private Task<Void> task;
 	
-	public static XMPPTCPConnection scon;
 
 	@Override
 	public void initialize (URL location, ResourceBundle resources) {

@@ -9,12 +9,14 @@ public class UtilidadesServidor {
 	
 	public static XMPPTCPConnection scon;
 	
+	public static String server="mikel-virtualbox";
+	
 	public static XMPPTCPConnection ServerConnection (String user,String pass) {
 		SmackConfiguration.DEBUG = true;
 		XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
 				  .setUsernameAndPassword(user,pass)
-				  .setServiceName("macbook-pro-de-aitor.local")
-				  .setHost("macbook-pro-de-aitor.local")
+				  .setServiceName(server+".local")
+				  .setHost(server+".local")
 				  .setPort(5222)
 				  .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
 				  .setCompressionEnabled(false)

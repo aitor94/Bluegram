@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;

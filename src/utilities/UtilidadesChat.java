@@ -32,7 +32,6 @@ public class UtilidadesChat {
 
 			contacto.setChat(ChatManager.getInstanceFor(UtilidadesServidor.scon).createChat(contacto.getId()));
 			contacto.setPresencia(roster.getPresence(contacto.getId()).toString());
-			System.out.println(entry.getUser());
 			contactos.put(contacto.getId(), contacto);
 		}
 
@@ -112,8 +111,6 @@ public class UtilidadesChat {
 	
 	public static void asignaMensajes(Map<String,Contacto> contactos , ObservableList<String> itemsContactos, List<Message> mensajesOff)
 	{
-		for(Contacto contacto : contactos.values())
-			itemsContactos.add(contacto.getNombre());
 		
 		for(Message mensaje : mensajesOff)
 		{
@@ -133,4 +130,6 @@ public class UtilidadesChat {
 		
 		mensajesOff.clear();
 	}
+	
+	
 }

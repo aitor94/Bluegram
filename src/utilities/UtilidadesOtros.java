@@ -30,6 +30,7 @@ public class UtilidadesOtros {
 		
 		catch (Exception e) {
 			UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Error al cargar la ventana");
+			e.printStackTrace();
 		}
 		
 		return scene;

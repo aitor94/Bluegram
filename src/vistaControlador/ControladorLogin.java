@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -35,10 +34,17 @@ public class ControladorLogin implements Initializable {
 	@FXML private Button registrar;
 	@FXML private ProgressIndicator iconoCargando;
 	
+	
+
 	private Task<Void> task;
 	
-	public static XMPPTCPConnection scon;
-
+	private static String user;
+	
+	public static String getUser() {
+		return user;
+	}
+	
+	
 	@Override
 	public void initialize (URL location, ResourceBundle resources) {
 		
@@ -66,6 +72,8 @@ public class ControladorLogin implements Initializable {
 					passVacio.setVisible(true);
 					correcto=false;
 				}
+
+				user=usuario.getText();
 				
 				if (recordar.isSelected()) UtilidadesOtros.guardarEnFichero(usuario.getText(), pass.getText());
 				
@@ -89,6 +97,7 @@ public class ControladorLogin implements Initializable {
 				catch (XMPPException e) {
 					UtilidadesOtros.alerta(AlertType.ERROR, "Error de autenticacion", "Usuario o contrasena erroneos");
 				}
+				
 				
 				finally {
 					iconoCargando.setVisible(false);

@@ -2,7 +2,6 @@ package vistaControlador;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -26,7 +25,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import modelo.Contacto;
-import utilities.UtilidadesChat;
 import utilities.UtilidadesServidor;
 
 public class ControladorConversacion implements Initializable {
@@ -47,6 +45,7 @@ public class ControladorConversacion implements Initializable {
 	private Contacto persona;
 	private ObservableList<String> mensajes;
 	private List<Message> listaMensajes;
+	
 
 	public void setMsgs(List<Message> msgs) {
 		if(msgs==null)
@@ -109,6 +108,7 @@ public class ControladorConversacion implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		mensajes = FXCollections.observableArrayList();
+		
 		
 
 

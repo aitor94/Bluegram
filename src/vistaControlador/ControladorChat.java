@@ -28,7 +28,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import main.Main;
 import modelo.Contacto;
+import utilities.BD;
 import utilities.UtilidadesChat;
+import utilities.UtilidadesConversacion;
 import utilities.UtilidadesOtros;
 import utilities.UtilidadesServidor;
 
@@ -49,6 +51,8 @@ public class ControladorChat implements Initializable {
 	private static String selected;
 
 	private ControladorConversacion cc;
+
+	private static BD bd=new BD();
 
 	public static String getSelected()
 	{
@@ -102,7 +106,8 @@ public class ControladorChat implements Initializable {
 						Contacto c=contactos.get(selected);
 						cc.setPersona(c);
 						cc.setChat(selected);
-						cc.setMsgs(c.getMensajes());
+						cc.setMsgs(UtilidadesConversacion.getOnlineHistory(bd, selected +"@"+UtilidadesServidor.server,ControladorLogin.getUser()+"@"+UtilidadesServidor.server ));
+						//cc.setMsgs(c.getMensajes());
 
 					} catch (IOException e) {
 						e.printStackTrace();

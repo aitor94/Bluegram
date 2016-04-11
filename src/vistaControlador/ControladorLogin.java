@@ -34,9 +34,17 @@ public class ControladorLogin implements Initializable {
 	@FXML private Button registrar;
 	@FXML private ProgressIndicator iconoCargando;
 	
-	private Task<Void> task;
 	
 
+	private Task<Void> task;
+	
+	private static String user;
+	
+	public static String getUser() {
+		return user;
+	}
+	
+	
 	@Override
 	public void initialize (URL location, ResourceBundle resources) {
 		
@@ -64,6 +72,8 @@ public class ControladorLogin implements Initializable {
 					passVacio.setVisible(true);
 					correcto=false;
 				}
+
+				user=usuario.getText();
 				
 				if (recordar.isSelected()) UtilidadesOtros.guardarEnFichero(usuario.getText(), pass.getText());
 				
@@ -87,6 +97,7 @@ public class ControladorLogin implements Initializable {
 				catch (XMPPException e) {
 					UtilidadesOtros.alerta(AlertType.ERROR, "Error de autenticacion", "Usuario o contrasena erroneos");
 				}
+				
 				
 				finally {
 					iconoCargando.setVisible(false);

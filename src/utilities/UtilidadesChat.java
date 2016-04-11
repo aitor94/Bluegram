@@ -37,6 +37,13 @@ public class UtilidadesChat {
 
 		return contactos;
 	}
+	
+	public static Contacto getContact(String contact)
+	{
+		Map<String, Contacto> contactos = getContacts();
+		
+		return contactos.get(contact);
+	}
 
 	public static void anadirContacto() {
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);

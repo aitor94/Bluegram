@@ -43,11 +43,17 @@ public class ControladorChat implements Initializable {
 	@FXML
 	private AnchorPane panelChat;
 
-	private Map<String, Contacto> contactos;
+	private static Map<String, Contacto> contactos;
 	private ObservableList<String> itemsContactos=FXCollections.observableArrayList();
 	private List<Message> mensajesRecibidos;
+	private static String selected;
 
 	private ControladorConversacion cc;
+
+	public static String getSelected()
+	{
+		return ControladorChat.selected;
+	}
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -90,12 +96,13 @@ public class ControladorChat implements Initializable {
 						AnchorPane ap = loader.load();
 						panelChat.getChildren().add(ap);
 						cc = loader.getController();
-						cc.getContacto().setText("");
-						cc.setContacto(listaContactos.getSelectionModel().getSelectedItem());
-
-						cc.setPersona(new Contacto());
-
-						cc.setChat(listaContactos.getSelectionModel().getSelectedItem());
+						cc.setContacto("");
+						selected=listaContactos.getSelectionModel().getSelectedItem();
+						cc.setContacto(selected);
+						Contacto c=contactos.get(selected);
+						cc.setPersona(c);
+						cc.setChat(selected);
+						cc.setMsgs(c.getMensajes());
 
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -123,15 +130,6 @@ public class ControladorChat implements Initializable {
 			}
 
 		});
-		
-		/*logout.setOnAction(new EventHandler<ActionEvent>() {
-			
-			@Override
-			public void handle(ActionEvent event) {
-				logout();
-				
-			}
-		});*/
 		
 		new Thread(hiloMensajes()).start();
 	}
@@ -172,27 +170,9 @@ public class ControladorChat implements Initializable {
 		};
 		return task;
 	}
-
+	
 	public void logout() {
 		UtilidadesServidor.scon.disconnect();
-
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(Main.class.getResource("/vistaControlador/Login.fxml"));
-
 		UtilidadesOtros.ventanaFXML ("/vistaControlador/Login.fxml", listaContactos.getScene());
-		/*
-		try {
-			
-			Scene escena;
-			escena = new Scene(loader.load());
-			if(listaContactos==null)
-				listaContactos=new ListView<String>();
-			Stage stg = (Stage) listaContactos.getScene().getWindow();
-			stg.setScene(escena);
-			stg.show();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
 	}
 }

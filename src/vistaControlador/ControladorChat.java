@@ -10,9 +10,14 @@ import java.util.ResourceBundle;
 import org.jivesoftware.smack.SmackException.NoResponseException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.XMPPException.XMPPErrorException;
+import org.jivesoftware.smack.chat.Chat;
+import org.jivesoftware.smack.chat.ChatManager;
+import org.jivesoftware.smack.chat.ChatManagerListener;
+import org.jivesoftware.smack.chat.ChatMessageListener;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -26,7 +31,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import main.Main;
 import modelo.Contacto;
 import utilities.BD;
 import utilities.UtilidadesChat;
@@ -36,54 +40,53 @@ import utilities.UtilidadesServidor;
 
 public class ControladorChat implements Initializable {
 
-	@FXML
-	private ListView<String> listaContactos=new ListView<String>();
-	@FXML
-	private MenuItem anadir;
-	@FXML
-	private MenuItem eliminar;
-	@FXML
-	private AnchorPane panelChat;
+	@FXML private ListView<String> listaContactos;
+	@FXML private MenuItem anadir;
+	@FXML private MenuItem eliminar;
+	@FXML private AnchorPane panelChat;
 
-	private static Map<String, Contacto> contactos;
+	private Map<String,ControladorConversacion> contactos;
 	private ObservableList<String> itemsContactos=FXCollections.observableArrayList();
-	private List<Message> mensajesRecibidos;
-	private static String selected;
+	private UtilidadesChat uc;
 
 	private ControladorConversacion cc;
-
-	private static BD bd=new BD();
-
-	public static String getSelected()
-	{
-		return ControladorChat.selected;
-	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
+		List<Message> mensajesOff = new ArrayList<Message>();	
+		try 
+		{
+			uc = new UtilidadesChat();
+		} 
+		catch (IOException e2) 
+		{
+			e2.printStackTrace();
+		}
+		contactos = uc.getContacts();
 		
-		List<Message> mensajesOff = new ArrayList<Message>();
-		
-		contactos = UtilidadesChat.getContacts();
-		
-		for(Contacto contacto : contactos.values())
+		for(ControladorConversacion contacto : contactos.values())
 			itemsContactos.add(contacto.getNombre());
 
-		try {
-			mensajesOff = UtilidadesChat.getOfflineMessages();
-		} catch (NoResponseException | XMPPErrorException | NotConnectedException e) {
+		try 
+		{
+			mensajesOff = uc.getOfflineMessages();
+			uc.asignaMensajes(contactos, mensajesOff);
+		} 
+		catch (NoResponseException | XMPPErrorException | NotConnectedException e) 
+		{
 			e.printStackTrace();
 		}
 
-		try {
+		try 
+		{
 			UtilidadesServidor.scon.sendPacket(new Presence(Presence.Type.available));
-		} catch (NotConnectedException e1) {
+		} 
+		catch (NotConnectedException e1) 
+		{
 			e1.printStackTrace();
 		}
-
-		UtilidadesChat.asignaMensajes(contactos, itemsContactos, mensajesOff);
 
 		listaContactos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
@@ -93,26 +96,31 @@ public class ControladorChat implements Initializable {
 		{
 			@Override
 			public void handle(MouseEvent event) {
-				if (listaContactos.getSelectionModel().isEmpty() == false) {
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistaControlador/Conversacion.fxml"));
-
-					try {
-						AnchorPane ap = loader.load();
-						panelChat.getChildren().add(ap);
-						cc = loader.getController();
-						cc.setContacto("");
-						selected=listaContactos.getSelectionModel().getSelectedItem();
-						cc.setContacto(selected);
-						Contacto c=contactos.get(selected);
-						cc.setPersona(c);
-						cc.setChat(selected);
-						cc.setMsgs(UtilidadesConversacion.getOnlineHistory(bd, selected +"@"+UtilidadesServidor.server,ControladorLogin.getUser()+"@"+UtilidadesServidor.server ));
-						//cc.setMsgs(c.getMensajes());
-
-					} catch (IOException e) {
+				if (listaContactos.getSelectionModel().isEmpty() == false) 
+				{
+					FXMLLoader loader = null;
+					cc = contactos.get(listaContactos.getSelectionModel().getSelectedItem());
+					loader.setController(cc);
+					try 
+					{
+						panelChat.getChildren().add(loader.load());
+						
+						cc.setContacto(listaContactos.getSelectionModel().getSelectedItem());
+						cc.setChat(cc.getChat());
+						cc.setFriend(cc.isFriend());
+						cc.setId(cc.getId());
+						cc.setMensajes(cc.getMensajes());
+						cc.setNombre(cc.getNombre());
+						cc.setPresencia(cc.getPresencia());
+						
+						//aqui ahora tiene que poner todos los mensajes en labels y que se vean en la conver
+					} 
+					catch (IOException e) 
+					{
 						e.printStackTrace();
 					}
 				}
+				event.consume();
 			}
 		});
 
@@ -120,8 +128,9 @@ public class ControladorChat implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				UtilidadesChat.anadirContacto();
-				listaContactos.refresh();
+				uc.anadirContacto();
+				//listaContactos.refresh();
+				event.consume();
 			}
 
 		});
@@ -130,53 +139,32 @@ public class ControladorChat implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				UtilidadesChat.eliminarContacto(listaContactos.getSelectionModel().getSelectedItem());
-				listaContactos.refresh();
+				
+				uc.eliminarContacto(listaContactos.getSelectionModel().getSelectedItem());
+				event.consume();
 			}
 
 		});
 		
-		new Thread(hiloMensajes()).start();
-	}
-
-	public Task<Void> hiloMensajes()// este hilo va a actualizar todo el rato la
-									// interfaz de usuario
-	{
-		Task<Void> task = new Task<Void>() {
+		ChatManager.getInstanceFor(UtilidadesServidor.scon).addChatListener(new ChatManagerListener() {
 			@Override
-			public Void call() {
-				long time;
-
-				while (true) {
-					for (Message mensaje : mensajesRecibidos) {
-						Contacto contacto = null;
-						if (contactos.containsKey(mensaje.getFrom())) {
-							contacto = contactos.get(mensaje.getFrom());
-							contacto.addMessage(mensaje);
-							contactos.put(contacto.getId(), contacto);
-						} else {
-							// si entra aqui el mensaje no es de ni gun
-							// contacto, tenemos que gestionar esto
-						}
-						mensajesRecibidos.remove(mensaje);
+			public void chatCreated(Chat chat, boolean createdLocally) {
+				chat.addMessageListener(new ChatMessageListener() {
+					@Override
+					public void processMessage(Chat chat, Message message) 
+					{						
+						Platform.runLater(() -> {
+							//aqui solo muevo mensajes de gente que no tengo agregada
+						});
+						//nose si recibe de los que no tengo agregados o todos, hay que mirarlo
 					}
-					if (mensajesRecibidos.isEmpty())
-						time = 1000;
-					else
-						time = 100;
-					try {
-						Thread.sleep(time);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+				});
 			}
-		};
-		return task;
+		});
 	}
 	
-	public void logout() {
+	public void logout() 
+	{
 		UtilidadesServidor.scon.disconnect();
 		UtilidadesOtros.ventanaFXML ("/vistaControlador/Login.fxml", listaContactos.getScene());
 	}

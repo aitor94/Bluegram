@@ -15,10 +15,9 @@
             <Button fx:id="enviar" layoutX="200.0" layoutY="283.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="59.0" text="Button" />
             <Label fx:id="contacto" layoutX="-2.0" layoutY="14.0" prefHeight="17.0" prefWidth="275.0" />
             <ListView fx:id="msgs" layoutX="7.0" layoutY="31.0" prefHeight="241.0" prefWidth="262.0" />
+            <Label layoutX="28.0" layoutY="46.0" style="-fx-background-color: #15f809; -fx-background-radius: 5; -fx-padding: 5;" text="Label" />
+            <Label layoutX="34.0" layoutY="106.0" style="-fx-background-color: #09adff; -fx-background-radius: 5; -fx-padding: 5;" text="Label" />
          </children>
       </Pane>
-      <AnchorPane layoutX="261.0" layoutY="-153.0" prefHeight="0.0" prefWidth="200.0" />
-      <TextField fx:id="verde" layoutX="245.0" layoutY="-48.0" maxWidth="200.0" prefHeight="27.0" prefWidth="200.0" style="-fx-background-color: #1eff72;" />
-      <TextField fx:id="azul" layoutX="245.0" layoutY="-95.0" maxWidth="200.0" prefHeight="27.0" prefWidth="200.0" style="-fx-background-color: #1fadff;" />
    </children>
 </AnchorPane>

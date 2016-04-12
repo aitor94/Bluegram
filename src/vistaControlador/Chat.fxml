@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="457.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="vistaControlador.ControladorChat">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vistaControlador.ControladorChat">
   <children>
     <SplitPane dividerPositions="0.2989010989010989" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <items>
@@ -28,14 +28,14 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Contactos">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Añadir" fx:id="anadir" />
-                    <MenuItem mnemonicParsing="false" text="Eliminar" fx:id="eliminar" />
+                    <MenuItem fx:id="anadir" mnemonicParsing="false" text="Añadir" />
+                    <MenuItem fx:id="eliminar" mnemonicParsing="false" text="Eliminar" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Configuración" />
               </menus>
             </MenuBar>
-            <AnchorPane fx:id="panelChat" prefHeight="369.0" prefWidth="316.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0" />
+                  <AnchorPane fx:id="panelChat" layoutX="1.0" layoutY="29.0" prefHeight="369.0" prefWidth="315.0" />
           </children>
         </AnchorPane>
       </items>

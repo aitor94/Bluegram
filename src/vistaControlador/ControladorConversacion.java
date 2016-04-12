@@ -22,12 +22,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import modelo.Contacto;
 import utilities.UtilidadesServidor;
 
-public class ControladorConversacion implements Initializable {
+public class ControladorConversacion extends Contacto implements Initializable {
 
 	@FXML
 	private TextArea texto;
@@ -36,45 +35,9 @@ public class ControladorConversacion implements Initializable {
 	@FXML
 	private Label contacto;
 	@FXML
-	private ListView<String> msgs;
-	@FXML
-	private TextField azul;
-	@FXML
-	private TextField verde;
+	private ListView<Label> msgs;
 
-	private Contacto persona;
-	private ObservableList<String> mensajes;
-	private List<Message> listaMensajes;
-	
-
-	public void setMsgs(List<Message> msgs) {
-		if(msgs==null)
-			msgs=new ArrayList<Message>();
-		this.listaMensajes = msgs;
-		ObservableList<String> lst = FXCollections.observableArrayList();
-		for (Message msg : msgs) {
-			lst.add(msg.getBody());
-		}
-		this.msgs.setItems(lst);
-	}
-
-	public void setMsgs(Message msg) {
-		ObservableList<String> lista = this.msgs.getItems();
-		lista.add(msg.getBody());
-		if (listaMensajes == null)
-			listaMensajes = FXCollections.observableArrayList();
-
-		listaMensajes.add(msg);
-		this.msgs.setItems(lista);
-	}
-
-	public Contacto getPersona() {
-		return persona;
-	}
-
-	public void setPersona(Contacto persona) {
-		this.persona = persona;
-	}
+	private ObservableList< Label  > mensajes;
 
 	public void setContacto(Label contacto) {
 		this.contacto = contacto;
@@ -108,58 +71,28 @@ public class ControladorConversacion implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		mensajes = FXCollections.observableArrayList();
-		
-		
-
-
-		ChatManager.getInstanceFor(UtilidadesServidor.scon).addChatListener(new ChatManagerListener() {
-			@Override
-			public void chatCreated(Chat chat, boolean createdLocally) {
-				chat.addMessageListener(new ChatMessageListener() {
-					@Override
-					public void processMessage(Chat chat, Message message) {
-						Platform.runLater(() -> {
-							mensajes.add(message.getBody());
-							msgs.setItems(mensajes);
-						});
-					}
-				});
-			}
-		});
 
 		enviar.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
-			public void handle(MouseEvent event) {
+			public void handle(MouseEvent event) 
+			{
 				String usuario = contacto.getText();
 				Message msg = new Message();
 
 				try {
 					msg.setBody(texto.getText());
-					persona.getChat().sendMessage(msg);
-					setMsgs(msg);
+					getChat().sendMessage(msg);
+					setMsgs(msg);//aqui tengo que poner mi mensaje para verlo yo
 					texto.clear();
-				} catch (NotConnectedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
+				} 
+				{
+					catch (NotConnectedException e) 
 					System.out.println("Error al mandar chat");
 				}
 			}
 
 		});
 	}
-
-	public void setChat(String contacto) {
-		ChatManager chatmanager = ChatManager.getInstanceFor(UtilidadesServidor.scon);
-
-		Chat chat = chatmanager.createChat(contacto + "@mikel-virtualbox", new ChatMessageListener() {
-			public void processMessage(Chat chat, Message message) {
-
-				listaMensajes.add(message);
-			}
-		});
-
-		persona.setChat(chat);
-	}
-
 }

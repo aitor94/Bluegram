@@ -90,6 +90,9 @@ public class ControladorRegistro implements Initializable
 										
 										ControladorRegistroFinal ctrl = loader.getController();
 										ctrl.setCode(ur.busquedaEJB().sendEmail(correo.getText()));
+										
+										ur.closeConnection();
+										
 										ctrl.setName(nombre.getText());
 										ctrl.setPassword(pass.getText());
 										ctrl.setEmail(correo.getText());

@@ -1,51 +1,73 @@
 package utilities;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.SmackException.NoResponseException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.SmackException.NotLoggedInException;
 import org.jivesoftware.smack.XMPPException.XMPPErrorException;
+import org.jivesoftware.smack.chat.Chat;
 import org.jivesoftware.smack.chat.ChatManager;
+import org.jivesoftware.smack.chat.ChatMessageListener;
 import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.roster.Roster;
 import org.jivesoftware.smack.roster.RosterEntry;
 import org.jivesoftware.smackx.offline.OfflineMessageManager;
 
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextInputDialog;
 import modelo.Contacto;
+import vistaControlador.ControladorConversacion;
 
-public class UtilidadesChat {
-	public static Map<String, Contacto> getContacts() {
+public class UtilidadesChat 
+{
+	private FXMLLoader loader;
+	
+	public FXMLLoader getLoader() {
+		return loader;
+	}
+
+	public void setLoader(FXMLLoader loader) {
+		this.loader = loader;
+	}
+
+	public UtilidadesChat() throws IOException
+	{
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistaControlador/Conversacion.fxml"));
+		loader.load();
+	}
+	
+	public Map<String,ControladorConversacion> getContacts() 
+	{
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);
-		Map<String, Contacto> contactos = new HashMap<String, Contacto>();
+		Map<String,ControladorConversacion> contactos = new HashMap<String,ControladorConversacion>();
+		ControladorConversacion cc = loader.getController();
 
-		for (RosterEntry entry : roster.getEntries()) {
-			Contacto contacto = new Contacto();
-			contacto.setId(entry.getUser());
-			contacto.setNombre(entry.getName());
-
-			contacto.setChat(ChatManager.getInstanceFor(UtilidadesServidor.scon).createChat(contacto.getId()));
-			contacto.setPresencia(roster.getPresence(contacto.getId()).toString());
-			contactos.put(contacto.getId(), contacto);
+		for (RosterEntry entry : roster.getEntries()) 
+		{
+			cc.setContacto(entry.getName());
+			cc.setFriend(true);
+			cc.setId(entry.getUser());
+			cc.setMensajes(new ArrayList<Message>());
+			cc.setNombre(entry.getName());
+			cc.setPresencia(roster.getPresence(entry.getUser()).toString());
+			
+			contactos.put(cc.getNombre(),cc);//falta meter los msgs en los labels y en el listview
 		}
 
 		return contactos;
 	}
 	
-	public static Contacto getContact(String contact)
+	public void anadirContacto() 
 	{
-		Map<String, Contacto> contactos = getContacts();
-		
-		return contactos.get(contact);
-	}
-
-	public static void anadirContacto() {
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);
 		System.out.println("Boton añadir del menu pulsado");
 		TextInputDialog dialog = new TextInputDialog();
@@ -71,9 +93,10 @@ public class UtilidadesChat {
 
 	}
 
-	public static void eliminarContacto(String string) {
+	public void eliminarContacto(String string) {
 
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);
+		
         RosterEntry re=roster.getEntry(string);
         try 
         {
@@ -98,7 +121,7 @@ public class UtilidadesChat {
 		}
     }
 
-	public static List<Message> getOfflineMessages()
+	public List<Message> getOfflineMessages()
 			throws NoResponseException, XMPPErrorException, NotConnectedException 
 	{
 		OfflineMessageManager omm = new OfflineMessageManager(UtilidadesServidor.scon);
@@ -116,27 +139,50 @@ public class UtilidadesChat {
 		return mensajes;
 	}
 	
-	public static void asignaMensajes(Map<String,Contacto> contactos , ObservableList<String> itemsContactos, List<Message> mensajesOff)
-	{
-		
+	public void asignaMensajes(Map<String,ControladorConversacion> contactos , List<Message> mensajesOff)
+	{		
 		for(Message mensaje : mensajesOff)
 		{
-			String from=mensaje.getFrom();
-			Contacto cto;
-			cto = contactos.get(from.split("@")[0]);
+			ControladorConversacion cto = contactos.get(mensaje.getFrom().split("@")[0]);
+			
 			if(cto!=null)
 			{
 				cto.addMessage(mensaje);
-				contactos.put(cto.getId(), cto);
+				Chat chat = ChatManager.getInstanceFor(UtilidadesServidor.scon).createChat(mensaje.getFrom(), new ChatMessageListener() 
+				{
+					@Override
+					public void processMessage(Chat chat, Message message) 
+					{
+						//aqui proceso los mensajes de este contacto
+					}
+				});
+				
+				cto.setChat(chat);
 			}
 			else
 			{
-				//aqui mensajes de contactos que no tengo agregados
+				cto = loader.getController();
+				cto.setNombre(mensaje.getFrom());
+				cto.setId(mensaje.getFrom());
+				cto.setFriend(false);
+				cto.setMensajes(new ArrayList<Message>(){{add(mensaje);}});
+				Chat chat = ChatManager.getInstanceFor(UtilidadesServidor.scon).createChat(mensaje.getFrom(), new ChatMessageListener() 
+				{
+					@Override
+					public void processMessage(Chat chat, Message message) 
+					{
+						//aqui proceso los mensajes de este contacto
+					}
+				});				
+				cto.setChat(chat);
 			}
-		}
-		
+			contactos.put(cto.getId(), cto);
+		}		
 		mensajesOff.clear();
 	}
 	
-	
+	public void labelGenerator(String texto)
+	{
+		
+	}
 }

@@ -11,6 +11,8 @@ import server.EJBInterface;
 
 public class UtilidadRegistro 
 {
+	private Context contexto;
+	
 	public EJBInterface busquedaEJB() throws NamingException
 	{
 		Properties prop = new Properties();
@@ -22,7 +24,7 @@ public class UtilidadRegistro
 		prop.put("jboss.naming.client.ejb.context", true);
 		prop.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming" );
 		
-		Context contexto = null;
+		contexto = null;
 		try {
 			contexto = new InitialContext(prop);
 		} catch (NamingException e) {
@@ -30,5 +32,18 @@ public class UtilidadRegistro
 		}
 		
 		return (EJBInterface) contexto.lookup("/ValidationEJB/EJB!server.EJBInterface");			
+	}
+	
+	public void closeConnection() throws NamingException
+	{
+		contexto.close();
+	}
+
+	public Context getContexto() {
+		return contexto;
+	}
+
+	public void setContexto(Context contexto) {
+		this.contexto = contexto;
 	}
 }

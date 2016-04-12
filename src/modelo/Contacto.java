@@ -13,6 +13,7 @@ public class Contacto
 	private String presencia;
 	private List<Message> mensajes;
 	private Chat chat;
+	private boolean isFriend;
 	
 	public String getId() {
 		return id;
@@ -50,5 +51,11 @@ public class Contacto
 		if(mensajes==null)
 			mensajes=new ArrayList<Message>();
 		mensajes.add(mensaje);
+	}
+	public boolean isFriend() {
+		return isFriend;
+	}
+	public void setFriend(boolean isFriend) {
+		this.isFriend = isFriend;
 	}
 }

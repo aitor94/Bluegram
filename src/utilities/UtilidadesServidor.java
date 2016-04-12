@@ -9,7 +9,7 @@ public class UtilidadesServidor {
 	
 	public static XMPPTCPConnection scon;
 	
-	public static String server="mikel-virtualbox";
+	public static String server="macbook-pro-de-aitor";
 	
 	public static XMPPTCPConnection ServerConnection (String user,String pass) {
 		SmackConfiguration.DEBUG = true;

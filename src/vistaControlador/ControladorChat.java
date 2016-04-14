@@ -28,6 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -100,7 +101,9 @@ public class ControladorChat implements Initializable {
 				if (listaContactos.getSelectionModel().isEmpty() == false) 
 				{
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistaControlador/Conversacion.fxml"));
-					contacto = contactos.get(listaContactos.getSelectionModel().getSelectedItem());
+					MultipleSelectionModel<String> a = listaContactos.getSelectionModel();
+					String b = a.getSelectedItem();
+					contacto = contactos.get(b);
 					
 					try 
 					{	

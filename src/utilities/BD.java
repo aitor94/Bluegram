@@ -12,9 +12,9 @@ import modelo.MessageArchive;
 
 public class BD {
 	
-	public static final String bd = "opf";
-	public static final String login = "aitor";
-	public static final String password = "1234";
+	public static final String bd = Constantes.bd;
+	public static final String login = Constantes.login;
+	public static final String password = Constantes.password;
 	public static final String url = "jdbc:mysql://localhost/" + bd;
 	   
 	private Connection connection;
@@ -53,7 +53,7 @@ public class BD {
 	public ArrayList<String> consultarUsuarios() {
 		ResultSet resultado;
 		ArrayList<String> usuarios = new ArrayList<>();
-        String instruccion = "SELECT * FROM opf.ofuser";
+        String instruccion = "SELECT * FROM " + bd + ".ofuser";
         try {
             resultado = connection.createStatement().executeQuery(instruccion);  
             
@@ -87,7 +87,7 @@ public class BD {
 
 		ResultSet resultado;
 		List<MessageArchive> mensajes = new ArrayList<MessageArchive>();
-		String instruccion = "SELECT * FROM opf.ofMessageArchive";
+		String instruccion = "SELECT * FROM " + bd + ".ofMessageArchive";
 		try {
 
 			statement = connection.createStatement();

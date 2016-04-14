@@ -10,15 +10,15 @@
    <children>
       <Label layoutX="21.0" layoutY="44.0" text="Nombre: " />
       <TextField fx:id="nombre" layoutX="75.0" layoutY="39.0" />
-      <Label layoutX="21.0" layoutY="174.0" text="Email:" />
-      <TextField fx:id="correo" layoutX="58.0" layoutY="169.0" />
-      <Button fx:id="boton" layoutX="137.0" layoutY="320.0" mnemonicParsing="false" text="Continuar" />
       <Label layoutX="21.0" layoutY="86.0" text="Contraseña:" />
       <Label layoutX="21.0" layoutY="128.0" text="Confirmar contraseña:" />
       <PasswordField fx:id="pass" layoutX="96.0" layoutY="81.0" />
       <PasswordField fx:id="confPass" layoutX="158.0" layoutY="125.0" />
+      <Label layoutX="21.0" layoutY="174.0" text="Email:" />
+      <TextField fx:id="correo" layoutX="58.0" layoutY="169.0" />      
       <ImageView fx:id="img" fitHeight="50.0" fitWidth="200.0" layoutX="21.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true" />
       <Label layoutX="21.0" layoutY="273.0" text="Captcha:" />
       <TextField fx:id="capt" layoutX="77.0" layoutY="268.0" />
+      <Button fx:id="boton" layoutX="137.0" layoutY="320.0" mnemonicParsing="false" text="Continuar" />      
    </children>
 </AnchorPane>

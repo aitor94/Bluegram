@@ -33,13 +33,14 @@ public class UtilidadesChat
 	{
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);
 		Map<String,Contacto> contactos = new HashMap<String,Contacto>();
-		Contacto cc = new Contacto();
+		Contacto cc;
 
 		for (RosterEntry entry : roster.getEntries()) 
 		{
+			cc = new Contacto();
 			cc.setFriend(true);
 			cc.setSelected(false);
-			cc.setId(entry.getUser()+"@macbook-pro-de-aitor.local/Smack");
+			cc.setId(entry.getUser()+"@Jorge-HP");
 			cc.setMensajes(new ArrayList<Message>());
 			cc.setNombre(entry.getName());
 			cc.setPresencia(roster.getPresence(entry.getUser()).toString());

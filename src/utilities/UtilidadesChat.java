@@ -1,66 +1,50 @@
 package utilities;
 
-import java.io.IOException;
+import java.awt.FontMetrics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.SmackException.NoResponseException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.SmackException.NotLoggedInException;
 import org.jivesoftware.smack.XMPPException.XMPPErrorException;
-import org.jivesoftware.smack.chat.Chat;
-import org.jivesoftware.smack.chat.ChatManager;
-import org.jivesoftware.smack.chat.ChatMessageListener;
 import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.roster.Roster;
 import org.jivesoftware.smack.roster.RosterEntry;
 import org.jivesoftware.smackx.offline.OfflineMessageManager;
 
-import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import modelo.Contacto;
-import vistaControlador.ControladorConversacion;
+import vistaControlador.ControladorChat;
 
 public class UtilidadesChat 
 {
-	private FXMLLoader loader;
-	
-	public FXMLLoader getLoader() {
-		return loader;
-	}
-
-	public void setLoader(FXMLLoader loader) {
-		this.loader = loader;
-	}
-
-	public UtilidadesChat() throws IOException
-	{
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistaControlador/Conversacion.fxml"));
-		loader.load();
-	}
-	
-	public Map<String,ControladorConversacion> getContacts() 
+	public Map<String,Contacto> getContacts() 
 	{
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);
-		Map<String,ControladorConversacion> contactos = new HashMap<String,ControladorConversacion>();
-		ControladorConversacion cc = loader.getController();
+		Map<String,Contacto> contactos = new HashMap<String,Contacto>();
+		Contacto cc = new Contacto();
 
 		for (RosterEntry entry : roster.getEntries()) 
 		{
-			cc.setContacto(entry.getName());
 			cc.setFriend(true);
-			cc.setId(entry.getUser());
+			cc.setSelected(false);
+			cc.setId(entry.getUser()+"@macbook-pro-de-aitor.local/Smack");
 			cc.setMensajes(new ArrayList<Message>());
 			cc.setNombre(entry.getName());
 			cc.setPresencia(roster.getPresence(entry.getUser()).toString());
 			
-			contactos.put(cc.getNombre(),cc);//falta meter los msgs en los labels y en el listview
+			contactos.put(cc.getNombre(),cc);
 		}
 
 		return contactos;
@@ -139,50 +123,64 @@ public class UtilidadesChat
 		return mensajes;
 	}
 	
-	public void asignaMensajes(Map<String,ControladorConversacion> contactos , List<Message> mensajesOff)
+	public void asignaMensajes(Map<String,Contacto> contactos , List<Message> mensajesOff)
 	{		
 		for(Message mensaje : mensajesOff)
 		{
-			ControladorConversacion cto = contactos.get(mensaje.getFrom().split("@")[0]);
+			Contacto cto = contactos.get(mensaje.getFrom().split("@")[0]);
 			
 			if(cto!=null)
 			{
-				cto.addMessage(mensaje);
-				Chat chat = ChatManager.getInstanceFor(UtilidadesServidor.scon).createChat(mensaje.getFrom(), new ChatMessageListener() 
-				{
-					@Override
-					public void processMessage(Chat chat, Message message) 
-					{
-						//aqui proceso los mensajes de este contacto
-					}
-				});
-				
-				cto.setChat(chat);
+				cto.addMessage(mensaje);				
 			}
 			else
 			{
-				cto = loader.getController();
+				cto = new Contacto();
 				cto.setNombre(mensaje.getFrom());
 				cto.setId(mensaje.getFrom());
 				cto.setFriend(false);
 				cto.setMensajes(new ArrayList<Message>(){{add(mensaje);}});
-				Chat chat = ChatManager.getInstanceFor(UtilidadesServidor.scon).createChat(mensaje.getFrom(), new ChatMessageListener() 
-				{
-					@Override
-					public void processMessage(Chat chat, Message message) 
-					{
-						//aqui proceso los mensajes de este contacto
-					}
-				});				
-				cto.setChat(chat);
 			}
 			contactos.put(cto.getId(), cto);
 		}		
 		mensajesOff.clear();
 	}
 	
-	public void labelGenerator(String texto)
+	public static void labelGenerator(String texto,Pos pos,String color)
 	{
+		StackPane pane = new StackPane();  
+		Text txt = new Text();
+		HBox hbox = new HBox();
 		
+		BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+		FontMetrics fm = img.getGraphics().getFontMetrics();
+		double width = fm.stringWidth(texto);
+		
+		pane.getChildren().add(txt);
+		txt.setText(texto);
+		txt.setFont(Font.font ("Verdana", 11));
+		
+		if(width>150)
+		{
+			txt.setWrappingWidth(150);
+			pane.setMaxWidth(150);
+    		pane.setPrefWidth(150);
+		}
+		else
+		{
+			pane.setMaxWidth(width);
+    		pane.setPrefWidth(width);
+		}
+		
+
+		pane.setStyle("-fx-background-color: "+color+"; -fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 5;");             		
+		StackPane.setAlignment(txt,pos);
+		pane.setPadding(new Insets(5,5,5,5));
+		
+		hbox.getChildren().add(pane);
+		hbox.setAlignment(pos);
+		
+		ControladorChat.conversacionActual.setMargin(hbox,new Insets(5,5,5,5));
+		ControladorChat.conversacionActual.addChildren(hbox);
 	}
 }

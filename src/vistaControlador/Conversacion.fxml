@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.control.*?>
@@ -11,12 +12,14 @@
    <children>
       <Pane layoutX="38.0" layoutY="78.0" prefHeight="369.0" prefWidth="275.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextArea fx:id="texto" layoutY="283.0" prefHeight="46.0" prefWidth="200.0" wrapText="true" />
-            <Button fx:id="enviar" layoutX="200.0" layoutY="283.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="59.0" text="Button" />
+            <TextArea fx:id="texto" layoutX="2.0" layoutY="317.0" prefHeight="46.0" prefWidth="196.0" wrapText="true" />
+            <Button fx:id="enviar" layoutX="198.0" layoutY="317.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="59.0" text="Enviar" />
             <Label fx:id="contacto" layoutX="-2.0" layoutY="14.0" prefHeight="17.0" prefWidth="275.0" />
-            <ListView fx:id="msgs" layoutX="7.0" layoutY="31.0" prefHeight="241.0" prefWidth="262.0" />
-            <Label layoutX="28.0" layoutY="46.0" style="-fx-background-color: #15f809; -fx-background-radius: 5; -fx-padding: 5;" text="Label" />
-            <Label layoutX="34.0" layoutY="106.0" style="-fx-background-color: #09adff; -fx-background-radius: 5; -fx-padding: 5;" text="Label" />
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutY="31.0" prefHeight="280.0" prefWidth="275.0">
+               <content>
+                  <VBox fx:id="vbox" alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="275.0" />
+               </content>
+            </ScrollPane>
          </children>
       </Pane>
    </children>

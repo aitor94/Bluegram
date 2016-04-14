@@ -3,7 +3,6 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jivesoftware.smack.chat.Chat;
 import org.jivesoftware.smack.packet.Message;
 
 public class Contacto 
@@ -12,8 +11,8 @@ public class Contacto
 	private String nombre;
 	private String presencia;
 	private List<Message> mensajes;
-	private Chat chat;
 	private boolean isFriend;
+	private boolean isSelected;
 	
 	public String getId() {
 		return id;
@@ -33,12 +32,6 @@ public class Contacto
 	public void setPresencia(String presencia) {
 		this.presencia = presencia;
 	}
-	public Chat getChat() {
-		return chat;
-	}
-	public void setChat(Chat chat) {
-		this.chat = chat;
-	}
 	public List<Message> getMensajes() {
 		return mensajes;
 	}
@@ -57,5 +50,11 @@ public class Contacto
 	}
 	public void setFriend(boolean isFriend) {
 		this.isFriend = isFriend;
+	}
+	public boolean isSelected() {
+		return isSelected;
+	}
+	public void setSelected(boolean isSelected) {
+		this.isSelected = isSelected;
 	}
 }

@@ -20,21 +20,19 @@ import org.jivesoftware.smack.packet.Presence;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import modelo.Contacto;
-import utilities.BD;
 import utilities.UtilidadesChat;
-import utilities.UtilidadesConversacion;
 import utilities.UtilidadesOtros;
 import utilities.UtilidadesServidor;
 
@@ -45,28 +43,21 @@ public class ControladorChat implements Initializable {
 	@FXML private MenuItem eliminar;
 	@FXML private AnchorPane panelChat;
 
-	private Map<String,ControladorConversacion> contactos;
+	private Map<String,Contacto> contactos;
 	private ObservableList<String> itemsContactos=FXCollections.observableArrayList();
 	private UtilidadesChat uc;
 
-	private ControladorConversacion cc;
+	public static ControladorConversacion conversacionActual;
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 		List<Message> mensajesOff = new ArrayList<Message>();	
-		try 
-		{
-			uc = new UtilidadesChat();
-		} 
-		catch (IOException e2) 
-		{
-			e2.printStackTrace();
-		}
+		uc = new UtilidadesChat();
 		contactos = uc.getContacts();
 		
-		for(ControladorConversacion contacto : contactos.values())
+		for(Contacto contacto : contactos.values())
 			itemsContactos.add(contacto.getNombre());
 
 		try 
@@ -93,27 +84,33 @@ public class ControladorChat implements Initializable {
 		listaContactos.setItems(FXCollections.observableArrayList(itemsContactos));
 		
 		listaContactos.setOnMouseClicked(new EventHandler<MouseEvent>() 
-		{
+		{	
 			@Override
-			public void handle(MouseEvent event) {
+			public void handle(MouseEvent event) 
+			{
+				Contacto contacto;
+				
+				if(conversacionActual != null)
+				{
+					contacto = conversacionActual.getContact();
+					contacto.setSelected(false);
+					contactos.put(contacto.getNombre(),contacto);
+				}				
+				
 				if (listaContactos.getSelectionModel().isEmpty() == false) 
 				{
-					FXMLLoader loader = null;
-					cc = contactos.get(listaContactos.getSelectionModel().getSelectedItem());
-					loader.setController(cc);
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistaControlador/Conversacion.fxml"));
+					contacto = contactos.get(listaContactos.getSelectionModel().getSelectedItem());
+					
 					try 
-					{
+					{	
 						panelChat.getChildren().add(loader.load());
+						conversacionActual = loader.getController();
+						contacto.setSelected(true);
+						conversacionActual.setContact(contacto);
 						
-						cc.setContacto(listaContactos.getSelectionModel().getSelectedItem());
-						cc.setChat(cc.getChat());
-						cc.setFriend(cc.isFriend());
-						cc.setId(cc.getId());
-						cc.setMensajes(cc.getMensajes());
-						cc.setNombre(cc.getNombre());
-						cc.setPresencia(cc.getPresencia());
-						
-						//aqui ahora tiene que poner todos los mensajes en labels y que se vean en la conver
+						for(Message msg : contacto.getMensajes())
+							UtilidadesChat.labelGenerator(msg.getBody(),Pos.TOP_RIGHT,"green");
 					} 
 					catch (IOException e) 
 					{
@@ -129,7 +126,6 @@ public class ControladorChat implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 				uc.anadirContacto();
-				//listaContactos.refresh();
 				event.consume();
 			}
 
@@ -148,15 +144,23 @@ public class ControladorChat implements Initializable {
 		
 		ChatManager.getInstanceFor(UtilidadesServidor.scon).addChatListener(new ChatManagerListener() {
 			@Override
-			public void chatCreated(Chat chat, boolean createdLocally) {
-				chat.addMessageListener(new ChatMessageListener() {
+			public void chatCreated(Chat chhat, boolean createdLocally) {
+				System.out.println(createdLocally);
+				chhat.addMessageListener(new ChatMessageListener() {
 					@Override
 					public void processMessage(Chat chat, Message message) 
-					{						
+					{		
+						Contacto contacto = contactos.get(message.getFrom().split("@")[0]);
+						contacto.addMessage(message);
+						contactos.put(contacto.getNombre(),contacto);
+						System.out.println("mensaje recibido de "+contacto.getId());
+						System.out.println("mensaje="+message.getBody());
+						
 						Platform.runLater(() -> {
-							//aqui solo muevo mensajes de gente que no tengo agregada
+							if(contacto.isSelected())
+								UtilidadesChat.labelGenerator(message.getBody(),Pos.TOP_RIGHT,"green");
+							
 						});
-						//nose si recibe de los que no tengo agregados o todos, hay que mirarlo
 					}
 				});
 			}

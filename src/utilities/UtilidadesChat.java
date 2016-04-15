@@ -19,6 +19,7 @@ import org.jivesoftware.smackx.offline.OfflineMessageManager;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -61,7 +62,7 @@ public class UtilidadesChat
 
 		Optional<String> result = dialog.showAndWait();
 
-		if (result.isPresent()) {
+		if (new BD().buscaUsuario(result.get())) {
 			try {
 				roster.createEntry(result.get(), result.get(), null);
 				roster.reload();
@@ -74,6 +75,9 @@ public class UtilidadesChat
 			} catch (NotLoggedInException e) {
 				System.out.println("Error de no logeado");
 			}
+			
+		} else {
+			UtilidadesOtros.alerta(AlertType.INFORMATION, "Aviso", "El usuario introducido no esta registrado en la aplicacion");
 		}
 
 	}

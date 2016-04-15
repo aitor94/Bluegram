@@ -28,7 +28,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -101,9 +100,7 @@ public class ControladorChat implements Initializable {
 				if (listaContactos.getSelectionModel().isEmpty() == false) 
 				{
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistaControlador/Conversacion.fxml"));
-					MultipleSelectionModel<String> a = listaContactos.getSelectionModel();
-					String b = a.getSelectedItem();
-					contacto = contactos.get(b);
+					contacto = contactos.get(listaContactos.getSelectionModel().getSelectedItem());
 					
 					try 
 					{	
@@ -130,6 +127,7 @@ public class ControladorChat implements Initializable {
 			public void handle(ActionEvent event) {
 				uc.anadirContacto();
 				event.consume();
+				UtilidadesOtros.ventanaFXML("/vistaControlador/Chat.fxml", panelChat.getScene());
 			}
 
 		});
@@ -141,6 +139,7 @@ public class ControladorChat implements Initializable {
 				
 				uc.eliminarContacto(listaContactos.getSelectionModel().getSelectedItem());
 				event.consume();
+				UtilidadesOtros.ventanaFXML("/vistaControlador/Chat.fxml", panelChat.getScene());
 			}
 
 		});

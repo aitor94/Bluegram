@@ -19,6 +19,7 @@ import org.jivesoftware.smackx.offline.OfflineMessageManager;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -33,13 +34,14 @@ public class UtilidadesChat
 	{
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);
 		Map<String,Contacto> contactos = new HashMap<String,Contacto>();
-		Contacto cc = new Contacto();
+		Contacto cc;
 
 		for (RosterEntry entry : roster.getEntries()) 
 		{
+			cc = new Contacto();
 			cc.setFriend(true);
 			cc.setSelected(false);
-			cc.setId(entry.getUser()+"@macbook-pro-de-aitor.local/Smack");
+			cc.setId(entry.getUser()+"@Jorge-HP");
 			cc.setMensajes(new ArrayList<Message>());
 			cc.setNombre(entry.getName());
 			cc.setPresencia(roster.getPresence(entry.getUser()).toString());
@@ -60,7 +62,7 @@ public class UtilidadesChat
 
 		Optional<String> result = dialog.showAndWait();
 
-		if (result.isPresent()) {
+		if (new BD().buscaUsuario(result.get())) {
 			try {
 				roster.createEntry(result.get(), result.get(), null);
 				roster.reload();
@@ -73,6 +75,9 @@ public class UtilidadesChat
 			} catch (NotLoggedInException e) {
 				System.out.println("Error de no logeado");
 			}
+			
+		} else {
+			UtilidadesOtros.alerta(AlertType.INFORMATION, "Aviso", "El usuario introducido no esta registrado en la aplicacion");
 		}
 
 	}

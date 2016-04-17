@@ -12,9 +12,9 @@ import modelo.MessageArchive;
 
 public class BD {
 	
-	public static final String bd = "opf";
-	public static final String login = "aitor";
-	public static final String password = "1234";
+	public static final String bd = Constantes.bd;
+	public static final String login = Constantes.login;
+	public static final String password = Constantes.password;
 	public static final String url = "jdbc:mysql://localhost/" + bd;
 	   
 	private Connection connection;
@@ -48,46 +48,33 @@ public class BD {
 	public void setConnection(Connection connection) {
 		this.connection = connection;
 	}
-	
-	
-	public ArrayList<String> consultarUsuarios() {
-		ResultSet resultado;
-		ArrayList<String> usuarios = new ArrayList<>();
-        String instruccion = "SELECT * FROM opf.ofuser";
-        try {
-            resultado = connection.createStatement().executeQuery(instruccion);  
-            
-            while (resultado.next()) {
-            	usuarios.add(resultado.getString("username"));
-            }
-            
-        } catch (Exception e) {            
-        	UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Error MySQL, consultando usuarios ---> " + e + "\n");   
-            usuarios = null;
-        }    
-        
-        return usuarios;
-    }
-	
-	public boolean existeUsuario(String usuario) {
+		
+	public boolean buscaUsuario (String usuario) {
 		
 		boolean exis = false;
+		ResultSet resultado;
+		String instruccion = "select * from ofuser where username="+"\""+usuario+"\"";
 		
-		ArrayList<String> lista = consultarUsuarios();
-		
-		for (String us : lista) {
-			if (us.equalsIgnoreCase(usuario)) {
+		try {
+			
+			resultado = connection.createStatement().executeQuery(instruccion);
+				
+			if (resultado.first() == true) {
 				exis = true;
 			}
+			
+		} catch (Exception e) {
+			UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Error al consultar la base de datos de usuarios");
 		}
-		return exis;
-	}
+		
+		return exis;		
+	}		
 	
 	public List<MessageArchive> getMensajes() {
 
 		ResultSet resultado;
 		List<MessageArchive> mensajes = new ArrayList<MessageArchive>();
-		String instruccion = "SELECT * FROM opf.ofMessageArchive";
+		String instruccion = "SELECT * FROM " + bd + ".ofMessageArchive";
 		try {
 
 			statement = connection.createStatement();

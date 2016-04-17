@@ -81,7 +81,7 @@ public class ControladorRegistro implements Initializable
 								{
 									BD bd = new BD();
 									
-									if (bd.existeUsuario(nombre.getText()) == false)
+									if (bd.buscaUsuario(nombre.getText()) == false)
 									{
 										FXMLLoader loader = new FXMLLoader();
 										loader.setLocation(ControladorRegistro.class.getResource("/vistaControlador/RegistroFinal.fxml"));

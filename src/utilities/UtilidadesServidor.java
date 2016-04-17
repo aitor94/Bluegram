@@ -9,14 +9,12 @@ public class UtilidadesServidor {
 	
 	public static XMPPTCPConnection scon;
 	
-	public static String server="macbook-pro-de-aitor";
-	
 	public static XMPPTCPConnection ServerConnection (String user,String pass) {
 		SmackConfiguration.DEBUG = true;
 		XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
 				  .setUsernameAndPassword(user,pass)
-				  .setServiceName(server+".local")
-				  .setHost(server+".local")
+				  .setServiceName(Constantes.serviceName)
+				  .setHost(Constantes.host)
 				  .setPort(5222)
 				  .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
 				  .setCompressionEnabled(false)

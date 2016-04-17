@@ -127,6 +127,7 @@ public class ControladorChat implements Initializable {
 			public void handle(ActionEvent event) {
 				uc.anadirContacto();
 				event.consume();
+				UtilidadesOtros.ventanaFXML("/vistaControlador/Chat.fxml", panelChat.getScene());
 			}
 
 		});
@@ -138,6 +139,7 @@ public class ControladorChat implements Initializable {
 				
 				uc.eliminarContacto(listaContactos.getSelectionModel().getSelectedItem());
 				event.consume();
+				UtilidadesOtros.ventanaFXML("/vistaControlador/Chat.fxml", panelChat.getScene());
 			}
 
 		});

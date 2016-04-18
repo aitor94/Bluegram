@@ -4,9 +4,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import org.jivesoftware.smack.SmackException.NotConnectedException;
+import org.jivesoftware.smack.chat.Chat;
 import org.jivesoftware.smack.chat.ChatManager;
 import org.jivesoftware.smack.packet.Message;
 
+import datos.FicheroXML;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +21,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import modelo.Contacto;
+import utilities.Constantes;
 import utilities.UtilidadesChat;
 import utilities.UtilidadesServidor;
 
@@ -32,7 +35,9 @@ public class ControladorConversacion extends Contacto implements Initializable {
 	private Label contacto;
 	@FXML
 	private VBox vbox;
-
+	
+	private Contacto contact;
+	
 	public void setContact(Contacto contacto)
 	{
 		super.setId(contacto.getId());
@@ -41,6 +46,8 @@ public class ControladorConversacion extends Contacto implements Initializable {
 		super.setNombre(contacto.getNombre());
 		super.setPresencia(contacto.getPresencia());
 		super.setSelected(contacto.isSelected());
+		this.contact=contacto;
+		
 	}
 	
 	public Contacto getContact()
@@ -109,10 +116,17 @@ public class ControladorConversacion extends Contacto implements Initializable {
 
 				try 
 				{
+					Chat chat=ChatManager.getInstanceFor(UtilidadesServidor.scon).createChat(contact.getNombre()+"@"+Constantes.serviceName+"/Smack");
 					msg.setBody(texto.getText());
-					ChatManager.getInstanceFor(UtilidadesServidor.scon).createChat(ControladorChat.conversacionActual.getId()).sendMessage(msg);
-					UtilidadesChat.labelGenerator(msg.getBody(),Pos.TOP_LEFT,"blue");
-					texto.clear();					
+					msg.setFrom(UtilidadesServidor.scon.getUser());
+					msg.setTo(contact.getNombre()+"@"+Constantes.serviceName+"/Smack");
+					UtilidadesChat.labelGenerator(msg.getBody(),Pos.TOP_RIGHT,"blue");
+					contact.addMessage(msg);
+					Message ms= new Message(msg.getTo(), msg.getBody()); 
+					chat.sendMessage(ms);
+					
+					texto.clear();
+					FicheroXML.escribeFichero(contact.getMensajes(),contact.getNombre());
 				} 
 					catch (NotConnectedException e) {
 					System.out.println("Error al mandar chat");

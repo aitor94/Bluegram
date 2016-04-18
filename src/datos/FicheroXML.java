@@ -11,12 +11,15 @@ import javax.xml.bind.Unmarshaller;
 
 import org.jivesoftware.smack.packet.Message;
 
+import modelo.Configuracion;
 import modelo.Historial;
 import modelo.Mensaje;
+import utilities.UtilidadesServidor;
 
 public class FicheroXML {
 
 	private static final String path = "history/";
+	private static final String pathConfig="config/";
 
 	public static String getPath() {
 		return path;
@@ -80,4 +83,35 @@ public class FicheroXML {
 
 	}
 
+	public static void escribeConfig(Configuracion config){
+		JAXBContext jaxbContext;
+		
+		try {
+			jaxbContext = JAXBContext.newInstance(Configuracion.class);
+			Marshaller marshaller = jaxbContext.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			marshaller.marshal(config, new File(pathConfig + UtilidadesServidor.scon.getUser().split("@")[0]+"_config.xml"));
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static Configuracion leeConfig()
+	{
+		JAXBContext jaxbContext;
+		Configuracion config=null;
+
+		try {
+			jaxbContext = JAXBContext.newInstance(Configuracion.class);
+			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+			File xml = new File(pathConfig + UtilidadesServidor.scon.getUser().split("@")[0]+"_config.xml");
+			if (xml.exists())
+				config = (Configuracion) unmarshaller.unmarshal(xml);
+			else
+				config = new Configuracion();
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		return config;
+	}
 }

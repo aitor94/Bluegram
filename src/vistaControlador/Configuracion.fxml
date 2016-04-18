@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="318.0" prefWidth="266.0001220703125" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="vistaControlador.ControladorConfiguracion">
+  <!-- TODO Add Nodes -->
+  <children>
+    <ChoiceBox fx:id="almacenamientoSelect" layoutX="164.0" layoutY="52.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="Item 1" />
+          <String fx:value="Item 2" />
+          <String fx:value="Item 3" />
+        </FXCollections>
+      </items>
+    </ChoiceBox>
+    <Label alignment="CENTER" layoutX="14.0" layoutY="52.0" prefHeight="21.0" prefWidth="143.0" text="Almacenamiento" textAlignment="CENTER" />
+    <Button fx:id="guardar" layoutX="186.0" layoutY="14.0" mnemonicParsing="false" text="Guardar" />
+    <Button fx:id="descartar" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Descartar" />
+  </children>
+</AnchorPane>

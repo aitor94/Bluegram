@@ -28,6 +28,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
@@ -47,6 +48,8 @@ public class ControladorChat implements Initializable {
 	private MenuItem eliminar;
 	@FXML
 	private AnchorPane panelChat;
+	@FXML
+	private MenuItem config;
 
 	private Map<String, Contacto> contactos;
 	private ObservableList<String> itemsContactos = FXCollections.observableArrayList();
@@ -147,6 +150,19 @@ public class ControladorChat implements Initializable {
 			}
 
 		});
+		
+		config.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				
+				UtilidadesOtros.ventanaFXML("/vistaControlador/Configuracion.fxml", panelChat.getScene());
+				event.consume();
+			}
+
+		});
+		
+		
 
 		ChatManager.getInstanceFor(UtilidadesServidor.scon).addChatListener(new ChatManagerListener() {
 			@Override

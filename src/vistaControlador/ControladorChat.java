@@ -17,6 +17,7 @@ import org.jivesoftware.smack.chat.ChatMessageListener;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 
+import datos.FicheroXML;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,82 +39,85 @@ import utilities.UtilidadesServidor;
 
 public class ControladorChat implements Initializable {
 
-	@FXML private ListView<String> listaContactos;
-	@FXML private MenuItem anadir;
-	@FXML private MenuItem eliminar;
-	@FXML private AnchorPane panelChat;
+	@FXML
+	private ListView<String> listaContactos;
+	@FXML
+	private MenuItem anadir;
+	@FXML
+	private MenuItem eliminar;
+	@FXML
+	private AnchorPane panelChat;
 
-	private Map<String,Contacto> contactos;
-	private ObservableList<String> itemsContactos=FXCollections.observableArrayList();
+	private Map<String, Contacto> contactos;
+	private ObservableList<String> itemsContactos = FXCollections.observableArrayList();
 	private UtilidadesChat uc;
 
 	public static ControladorConversacion conversacionActual;
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void initialize(URL location, ResourceBundle resources) 
-	{
-		List<Message> mensajesOff = new ArrayList<Message>();	
+	public void initialize(URL location, ResourceBundle resources) {
+		List<Message> mensajesOff = new ArrayList<Message>();
 		uc = new UtilidadesChat();
 		contactos = uc.getContacts();
-		
-		for(Contacto contacto : contactos.values())
+
+		for (Contacto contacto : contactos.values())
 			itemsContactos.add(contacto.getNombre());
 
-		try 
-		{
+		try {
 			mensajesOff = uc.getOfflineMessages();
 			uc.asignaMensajes(contactos, mensajesOff);
-		} 
-		catch (NoResponseException | XMPPErrorException | NotConnectedException e) 
-		{
+		} catch (NoResponseException | XMPPErrorException | NotConnectedException e) {
 			e.printStackTrace();
 		}
 
-		try 
-		{
+		try {
 			UtilidadesServidor.scon.sendPacket(new Presence(Presence.Type.available));
-		} 
-		catch (NotConnectedException e1) 
-		{
+		} catch (NotConnectedException e1) {
 			e1.printStackTrace();
 		}
 
 		listaContactos.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		
+
 		listaContactos.setItems(FXCollections.observableArrayList(itemsContactos));
-		
-		listaContactos.setOnMouseClicked(new EventHandler<MouseEvent>() 
-		{	
+
+		listaContactos.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
-			public void handle(MouseEvent event) 
-			{
+			public void handle(MouseEvent event) {
 				Contacto contacto;
-				
-				if(conversacionActual != null)
-				{
+
+				if (conversacionActual == null)
+					conversacionActual = new ControladorConversacion();
+
+				if (conversacionActual != null) {
 					contacto = conversacionActual.getContact();
 					contacto.setSelected(false);
-					contactos.put(contacto.getNombre(),contacto);
-				}				
-				
-				if (listaContactos.getSelectionModel().isEmpty() == false) 
-				{
+					contactos.put(contacto.getNombre(), contacto);
+				}
+
+				if (listaContactos.getSelectionModel().isEmpty() == false) {
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistaControlador/Conversacion.fxml"));
 					contacto = contactos.get(listaContactos.getSelectionModel().getSelectedItem());
-					
-					try 
-					{	
+
+					try {
 						panelChat.getChildren().add(loader.load());
 						conversacionActual = loader.getController();
+						contacto.setMensajes(FicheroXML.leeFichero(contacto.getNombre()));
 						contacto.setSelected(true);
+
 						conversacionActual.setContact(contacto);
-						
-						for(Message msg : contacto.getMensajes())
-							UtilidadesChat.labelGenerator(msg.getBody(),Pos.TOP_RIGHT,"green");
-					} 
-					catch (IOException e) 
-					{
+
+						if (contacto.getMensajes() != null) {
+							for (Message msg : contacto.getMensajes()) {
+								if (msg.getFrom() != null) {
+									if ((msg.getFrom().split("@")[0]).equals(contacto.getNombre()))
+										UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_LEFT, "green");
+									else
+										UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_RIGHT, "blue");
+								}
+							}
+						}
+					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
@@ -136,42 +140,41 @@ public class ControladorChat implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				
+
 				uc.eliminarContacto(listaContactos.getSelectionModel().getSelectedItem());
 				event.consume();
 				UtilidadesOtros.ventanaFXML("/vistaControlador/Chat.fxml", panelChat.getScene());
 			}
 
 		});
-		
+
 		ChatManager.getInstanceFor(UtilidadesServidor.scon).addChatListener(new ChatManagerListener() {
 			@Override
 			public void chatCreated(Chat chhat, boolean createdLocally) {
 				System.out.println(createdLocally);
 				chhat.addMessageListener(new ChatMessageListener() {
 					@Override
-					public void processMessage(Chat chat, Message message) 
-					{		
+					public void processMessage(Chat chat, Message message) {
 						Contacto contacto = contactos.get(message.getFrom().split("@")[0]);
 						contacto.addMessage(message);
-						contactos.put(contacto.getNombre(),contacto);
-						System.out.println("mensaje recibido de "+contacto.getId());
-						System.out.println("mensaje="+message.getBody());
-						
+						FicheroXML.escribeFichero(contacto.getMensajes(), contacto.getNombre());
+						contactos.put(contacto.getNombre(), contacto);
+						System.out.println("mensaje recibido de " + contacto.getId());
+						System.out.println("mensaje=" + message.getBody());
+
 						Platform.runLater(() -> {
-							if(contacto.isSelected())
-								UtilidadesChat.labelGenerator(message.getBody(),Pos.TOP_RIGHT,"green");
-							
+							if (contacto.isSelected())
+								UtilidadesChat.labelGenerator(message.getBody(), Pos.TOP_RIGHT, "green");
+
 						});
 					}
 				});
 			}
 		});
 	}
-	
-	public void logout() 
-	{
+
+	public void logout() {
 		UtilidadesServidor.scon.disconnect();
-		UtilidadesOtros.ventanaFXML ("/vistaControlador/Login.fxml", listaContactos.getScene());
+		UtilidadesOtros.ventanaFXML("/vistaControlador/Login.fxml", listaContactos.getScene());
 	}
 }

@@ -41,7 +41,7 @@ public class UtilidadesChat
 			cc = new Contacto();
 			cc.setFriend(true);
 			cc.setSelected(false);
-			cc.setId(entry.getUser()+"@Jorge-HP");
+			cc.setId(entry.getUser()+"@"+Constantes.serviceName);
 			cc.setMensajes(new ArrayList<Message>());
 			cc.setNombre(entry.getName());
 			cc.setPresencia(roster.getPresence(entry.getUser()).toString());

@@ -53,7 +53,7 @@ public class BD {
 		
 		boolean exis = false;
 		ResultSet resultado;
-		String instruccion = "select * from ofuser where username="+"\""+usuario+"\"";
+		String instruccion = "select * from "+bd+".ofUser where username="+"\""+usuario+"\"";
 		
 		try {
 			

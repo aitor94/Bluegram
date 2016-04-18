@@ -102,7 +102,6 @@ public class ControladorChat implements Initializable {
 					try {
 						panelChat.getChildren().add(loader.load());
 						conversacionActual = loader.getController();
-						String n = contacto.getNombre();
 						contacto.setMensajes(FicheroXML.leeFichero(contacto.getNombre()));
 						contacto.setSelected(true);
 

@@ -87,5 +87,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/spark-core_2.9.3-0.8.0-incubating.jar"/>
+	<classpathentry kind="lib" path="lib/api-util-1.0.0-m17.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

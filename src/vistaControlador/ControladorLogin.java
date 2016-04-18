@@ -96,15 +96,15 @@ public class ControladorLogin implements Initializable {
 					}
 				}
 
-				catch (SmackException e) {
+				catch (SmackException e) {System.out.println("error conexion");e.printStackTrace();
 					UtilidadesOtros.alerta(AlertType.ERROR, "Error de conexion", "Error de conexion");
 				}
 
-				catch (IOException e) {
+				catch (IOException e) {System.out.println("error inisperado");e.printStackTrace();
 					UtilidadesOtros.alerta(AlertType.ERROR, "Error inesperado", "Error inesperado");
 				}
 
-				catch (XMPPException e) {
+				catch (XMPPException e) {System.out.println("error autenticacion");e.printStackTrace();
 					UtilidadesOtros.alerta(AlertType.ERROR, "Error de autenticacion", "Usuario o contrasena erroneos");
 				}
 
@@ -119,6 +119,7 @@ public class ControladorLogin implements Initializable {
 			@Override
 			public void handle(WorkerStateEvent t) {
 				UtilidadesOtros.ventanaFXML("/vistaControlador/Chat.fxml", usuario.getScene());
+				t.consume();
 			}
 		});
 

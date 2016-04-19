@@ -28,12 +28,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import modelo.Configuracion;
 import modelo.Contacto;
 import utilities.UtilidadesChat;
 import utilities.UtilidadesOtros;
@@ -52,13 +50,12 @@ public class ControladorChat implements Initializable {
 	@FXML
 	private MenuItem config;
 
-	private Map<String, Contacto> contactos;
 	private ObservableList<String> itemsContactos = FXCollections.observableArrayList();
 	private UtilidadesChat uc;
 
 	public static ControladorConversacion conversacionActual;
+	public static Map<String, Contacto> contactos;
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		List<Message> mensajesOff = new ArrayList<Message>();
@@ -70,13 +67,13 @@ public class ControladorChat implements Initializable {
 
 		try {
 			mensajesOff = uc.getOfflineMessages();
-			uc.asignaMensajes(contactos, mensajesOff);
+			uc.asignaMensajes(mensajesOff);
 		} catch (NoResponseException | XMPPErrorException | NotConnectedException e) {
 			e.printStackTrace();
 		}
 
 		try {
-			UtilidadesServidor.scon.sendPacket(new Presence(Presence.Type.available));
+			UtilidadesServidor.scon.sendStanza(new Presence(Presence.Type.available));
 		} catch (NotConnectedException e1) {
 			e1.printStackTrace();
 		}
@@ -182,7 +179,6 @@ public class ControladorChat implements Initializable {
 						Platform.runLater(() -> {
 							if (contacto.isSelected())
 								UtilidadesChat.labelGenerator(message.getBody(), Pos.TOP_RIGHT, "lightgreen");
-
 						});
 					}
 				});

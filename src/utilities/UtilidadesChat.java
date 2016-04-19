@@ -39,13 +39,10 @@ public class UtilidadesChat {
 			try {
 				roster.reloadAndWait();
 			} catch (NotLoggedInException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (NotConnectedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -145,9 +142,9 @@ public class UtilidadesChat {
 		return mensajes;
 	}
 
-	public void asignaMensajes(Map<String, Contacto> contactos, List<Message> mensajesOff) {
+	public void asignaMensajes(List<Message> mensajesOff) {
 		for (Message mensaje : mensajesOff) {
-			Contacto cto = contactos.get(mensaje.getFrom().split("@")[0]);
+			Contacto cto = ControladorChat.contactos.get(mensaje.getFrom());
 
 			if (cto != null) {
 				cto.addMessage(mensaje);
@@ -157,12 +154,12 @@ public class UtilidadesChat {
 				cto.setId(mensaje.getFrom());
 				cto.setFriend(false);
 				cto.setMensajes(new ArrayList<Message>() {
-					{
+				{
 						add(mensaje);
-					}
+				}
 				});
 			}
-			contactos.put(cto.getId(), cto);
+			ControladorChat.contactos.put(cto.getId(), cto);
 		}
 		mensajesOff.clear();
 	}

@@ -8,8 +8,6 @@ import org.jivesoftware.smack.chat.Chat;
 import org.jivesoftware.smack.chat.ChatManager;
 import org.jivesoftware.smack.packet.Message;
 
-import com.sun.jna.Platform;
-
 import datos.FicheroXML;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -40,8 +38,22 @@ public class ControladorConversacion extends Contacto implements Initializable {
 	private Label contacto;
 	@FXML
 	private VBox vbox;
+	
+	public VBox getVbox() {
+		return vbox;
+	}
+
+	public void setVbox(VBox vbox) {
+		this.vbox = vbox;
+	}
+
 	@FXML
 	private ScrollPane scrollPane;
+	
+	public void setVSize(double height)
+	{
+		scrollPane.setVvalue(height);
+	}
 
 	private Contacto contact;
 
@@ -108,18 +120,9 @@ public class ControladorConversacion extends Contacto implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		scrollPane.setVvalue(1.0);
-		
-		scrollPane.contentProperty().addListener(new ChangeListener() {
-			@Override
-			public void changed(ObservableValue ov, Object t, Object t1) {
 
-				scrollPane.setVvalue(scrollPane.getVmax());
-			}
-		});
-
-		enviar.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
+		enviar.setOnMouseClicked(new EventHandler<MouseEvent>() 
+		{
 			@Override
 			public void handle(MouseEvent event) {
 				Message msg = new Message();
@@ -144,5 +147,15 @@ public class ControladorConversacion extends Contacto implements Initializable {
 			}
 
 		});
+		
+		vbox.heightProperty().addListener(new ChangeListener<Number>() 
+		{
+	        @Override
+	        public void changed(ObservableValue<? extends Number> arg0,Number arg1, Number arg2) 
+	        {
+	            scrollPane.setVvalue(1.0);
+	        }
+		});
+		
 	}
 }

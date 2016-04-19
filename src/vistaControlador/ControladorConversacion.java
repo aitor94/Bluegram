@@ -24,32 +24,27 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import modelo.Contacto;
-import utilities.Constantes;
 import utilities.UtilidadesChat;
 import utilities.UtilidadesServidor;
 
-public class ControladorConversacion extends Contacto implements Initializable {
-
-	@FXML
-	private TextArea texto;
-	@FXML
-	private Button enviar;
-	@FXML
-	private Label contacto;
-	@FXML
-	private VBox vbox;
+public class ControladorConversacion extends Contacto implements Initializable
+{
+	@FXML private TextArea texto;
+	@FXML private Button enviar;
+	@FXML private Label contacto;
+	@FXML private VBox vbox;
+	@FXML private ScrollPane scrollPane;
 	
-	public VBox getVbox() {
+	public VBox getVbox() 
+	{
 		return vbox;
 	}
 
-	public void setVbox(VBox vbox) {
+	public void setVbox(VBox vbox) 
+	{
 		this.vbox = vbox;
 	}
 
-	@FXML
-	private ScrollPane scrollPane;
-	
 	public void setVSize(double height)
 	{
 		scrollPane.setVvalue(height);
@@ -57,7 +52,8 @@ public class ControladorConversacion extends Contacto implements Initializable {
 
 	private Contacto contact;
 
-	public void setContact(Contacto contacto) {
+	public void setContact(Contacto contacto) 
+	{
 		super.setId(contacto.getId());
 		super.setFriend(contacto.isFriend());
 		super.setMensajes(contacto.getMensajes());
@@ -65,10 +61,10 @@ public class ControladorConversacion extends Contacto implements Initializable {
 		super.setPresencia(contacto.getPresencia());
 		super.setSelected(contacto.isSelected());
 		this.contact = contacto;
-
 	}
 
-	public Contacto getContact() {
+	public Contacto getContact() 
+	{
 		Contacto contacto = new Contacto();
 
 		contacto.setFriend(super.isFriend());
@@ -81,59 +77,69 @@ public class ControladorConversacion extends Contacto implements Initializable {
 		return contacto;
 	}
 
-	public void setContacto(Label contacto) {
+	public void setContacto(Label contacto) 
+	{
 		this.contacto = contacto;
 	}
 
-	public TextArea getTexto() {
+	public TextArea getTexto() 
+	{
 		return texto;
 	}
 
-	public void setTexto(TextArea texto) {
+	public void setTexto(TextArea texto) 
+	{
 		this.texto = texto;
 	}
 
-	public Button getEnviar() {
+	public Button getEnviar() 
+	{
 		return enviar;
 	}
 
-	public void setEnviar(Button enviar) {
+	public void setEnviar(Button enviar) 
+	{
 		this.enviar = enviar;
 	}
 
-	public Label getContacto() {
+	public Label getContacto() 
+	{
 		return contacto;
 	}
 
-	public void setContacto(String contacto) {
-
+	public void setContacto(String contacto) 
+	{
 		this.contacto.setText(contacto);
 	}
 
-	public void setMargin(Node node, Insets i) {
+	public void setMargin(Node node, Insets i) 
+	{
 		VBox.setMargin(node, i);
 	}
 
-	public void addChildren(Node node) {
+	public void addChildren(Node node) 
+	{
 		vbox.getChildren().add(node);
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-
+	public void initialize(URL location, ResourceBundle resources) 
+	{
 		enviar.setOnMouseClicked(new EventHandler<MouseEvent>() 
 		{
 			@Override
-			public void handle(MouseEvent event) {
+			public void handle(MouseEvent event) 
+			{
 				Message msg = new Message();
 
-				try {
+				try 
+				{
 					Chat chat = ChatManager.getInstanceFor(UtilidadesServidor.scon)
-							.createChat(contact.getNombre() + "@" + Constantes.serviceName + "/Smack");
+							.createChat(contact.getId());
 					msg.setBody(texto.getText());
 					msg.setFrom(UtilidadesServidor.scon.getUser());
-					msg.setTo(contact.getNombre() + "@" + Constantes.serviceName + "/Smack");
-					UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_RIGHT, "paleturquoise");
+					msg.setTo(contact.getId());
+					UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_LEFT, "paleturquoise");
 					contact.addMessage(msg);
 					Message ms = new Message(msg.getTo(), msg.getBody());
 					chat.sendMessage(ms);
@@ -141,7 +147,9 @@ public class ControladorConversacion extends Contacto implements Initializable {
 					texto.clear();
 					FicheroXML.escribeFichero(contact.getMensajes(), contact.getNombre());
 					
-				} catch (NotConnectedException e) {
+				} 
+				catch (NotConnectedException e) 
+				{
 					System.out.println("Error al mandar chat");
 				}
 			}

@@ -30,8 +30,10 @@ import modelo.Contacto;
 import vistaControlador.ControladorChat;
 import vistaControlador.ControladorConfiguracion;
 
-public class UtilidadesChat {
-	public Map<String, Contacto> getContacts() {
+public class UtilidadesChat
+{
+	public Map<String, Contacto> getContacts() 
+	{
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);
 		
 		if(!roster.isLoaded())
@@ -51,7 +53,8 @@ public class UtilidadesChat {
 		Contacto cc;
 		ControladorConfiguracion config = new ControladorConfiguracion();
 
-		for (RosterEntry entry : roster.getEntries()) {
+		for (RosterEntry entry : roster.getEntries()) 
+		{
 			cc = new Contacto();
 			cc.setFriend(true);
 			cc.setSelected(false);
@@ -59,27 +62,28 @@ public class UtilidadesChat {
 			cc.setNombre(entry.getName());
 			cc.setPresencia(roster.getPresence(entry.getUser()).toString());
 
-			switch (config.getConfig().getAlmacenamiento()) {
-			case ("Online"): {
-				cc.setMensajes(UtilidadesConversacion.getOnlineHistory(new BD(), UtilidadesServidor.scon.getUser().split("/")[0],
-						entry.getUser()+"@"+Constantes.host));
-				break;
+			switch (config.getConfig().getAlmacenamiento()) 
+			{
+				case ("Online"): 
+				{
+					cc.setMensajes(UtilidadesConversacion.getOnlineHistory(new BD(),cc.getId(),cc.getId()));
+					break;
+				}
+				case ("Local"): 
+				{
+					cc.setMensajes(FicheroXML.leeFichero(entry.getUser()));
+					break;
+				}
 			}
-			case ("Local"): {
-				cc.setMensajes(FicheroXML.leeFichero(entry.getUser()));
-				break;
-			}
-			}
-
-			contactos.put(cc.getNombre(), cc);
+			contactos.put(cc.getId(), cc);
 		}
 
 		return contactos;
 	}
 
-	public void anadirContacto() {
+	public void anadirContacto() 
+	{
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);
-		System.out.println("Boton añadir del menu pulsado");
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle("Añadir contacto");
 		dialog.setContentText("Inserte el ID del contacto:");
@@ -100,19 +104,21 @@ public class UtilidadesChat {
 				System.out.println("Error de no logeado");
 			}
 
-		} else {
+		} 
+		else 
+		{
 			UtilidadesOtros.alerta(AlertType.INFORMATION, "Aviso",
 					"El usuario introducido no esta registrado en la aplicacion");
 		}
-
 	}
 
-	public void eliminarContacto(String string) {
-
+	public void eliminarContacto(String string) 
+	{
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);
 
 		RosterEntry re = roster.getEntry(string);
-		try {
+		try 
+		{
 			roster.removeEntry(re);
 			roster.reload();
 		} catch (NoResponseException e) {
@@ -126,45 +132,57 @@ public class UtilidadesChat {
 		}
 	}
 
-	public List<Message> getOfflineMessages() throws NoResponseException, XMPPErrorException, NotConnectedException {
+	public List<Message> getOfflineMessages() throws NoResponseException, XMPPErrorException, NotConnectedException 
+	{
 		OfflineMessageManager omm = new OfflineMessageManager(UtilidadesServidor.scon);
 		List<Message> mensajes = null;
 
-		if (omm.getMessageCount() == 0) {
+		if (omm.getMessageCount() == 0) 
+		{
 			mensajes = new ArrayList<Message>();
 			System.out.println("0 mensajes offline");
-		} else {
+		} 
+		else 
+		{
 			mensajes = omm.getMessages();
 			omm.deleteMessages();
 			System.out.println("varios mensajes offline->" + mensajes.size());
 		}
-
 		return mensajes;
 	}
 
-	public void asignaMensajes(List<Message> mensajesOff) {
-		for (Message mensaje : mensajesOff) {
-			Contacto cto = ControladorChat.contactos.get(mensaje.getFrom());
+	@SuppressWarnings("serial")
+	public void asignaMensajes(List<Message> mensajesOff) 
+	{
+		for (Message mensaje : mensajesOff) 
+		{
+			Contacto cto = ControladorChat.contactos.get(mensaje.getFrom().split("/")[0]);
 
-			if (cto != null) {
+			if (cto != null) 
+			{
 				cto.addMessage(mensaje);
-			} else {
+			} 
+			else 
+			{
 				cto = new Contacto();
-				cto.setNombre(mensaje.getFrom());
-				cto.setId(mensaje.getFrom());
+				cto.setNombre(mensaje.getFrom().split("@")[0]);
+				cto.setId(mensaje.getFrom().split("/")[0]);
 				cto.setFriend(false);
-				cto.setMensajes(new ArrayList<Message>() {
+				cto.setMensajes(new ArrayList<Message>() 
 				{
-						add(mensaje);
-				}
+					{
+							add(mensaje);
+					}
 				});
 			}
 			ControladorChat.contactos.put(cto.getId(), cto);
+			FicheroXML.escribeFichero(cto.getMensajes(),cto.getNombre());
 		}
 		mensajesOff.clear();
 	}
 
-	public static void labelGenerator(String texto, Pos pos, String color) {
+	public static void labelGenerator(String texto, Pos pos, String color) 
+	{
 		StackPane pane = new StackPane();
 		Text txt = new Text();
 		HBox hbox = new HBox();
@@ -177,11 +195,14 @@ public class UtilidadesChat {
 		txt.setText(texto);
 		txt.setFont(Font.font("Verdana", 11));
 
-		if (width > 150) {
+		if (width > 150) 
+		{
 			txt.setWrappingWidth(150);
 			pane.setMaxWidth(150);
 			pane.setPrefWidth(150);
-		} else {
+		} 
+		else 
+		{
 			pane.setMaxWidth(width);
 			pane.setPrefWidth(width);
 		}

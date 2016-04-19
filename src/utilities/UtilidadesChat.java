@@ -71,7 +71,7 @@ public class UtilidadesChat
 				}
 				case ("Local"): 
 				{
-					cc.setMensajes(FicheroXML.leeFichero(entry.getUser()));
+					cc.setMensajes(FicheroXML.leeFichero(UtilidadesServidor.scon.getUser().split("@")[0]+entry.getUser()));
 					break;
 				}
 			}
@@ -176,7 +176,7 @@ public class UtilidadesChat
 				});
 			}
 			ControladorChat.contactos.put(cto.getId(), cto);
-			FicheroXML.escribeFichero(cto.getMensajes(),cto.getNombre());
+			FicheroXML.escribeFichero(cto.getMensajes(),UtilidadesServidor.scon.getUser().split("@")[0]+cto.getNombre());
 		}
 		mensajesOff.clear();
 	}

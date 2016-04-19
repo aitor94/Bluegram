@@ -103,8 +103,11 @@ public class ControladorChat implements Initializable
 						contactos.put(contacto.getNombre(), contacto);
 					}
 					
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistaControlador/Conversacion.fxml"));
-					contacto = contactos.get(listaContactos.getSelectionModel().getSelectedItem()+"@"+Constantes.serviceName);
+					FXMLLoader loader = new FXMLLoader(getClass()
+							.getResource("/vistaControlador/Conversacion.fxml"));
+					
+					contacto = contactos.get(listaContactos
+							.getSelectionModel().getSelectedItem()+"@"+Constantes.serviceName);
 					
 					try 
 					{
@@ -120,9 +123,9 @@ public class ControladorChat implements Initializable
 								if (msg.getFrom() != null) 
 								{
 									if (msg.getFrom().split("/")[0].equals(contacto.getId()))
-										UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_LEFT, "paleturquoise");
-									else
 										UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_RIGHT, "lightgreen");
+									else
+										UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_LEFT, "paleturquoise");
 								}
 							}
 						}
@@ -181,7 +184,8 @@ public class ControladorChat implements Initializable
 					{						
 						Contacto contacto = contactos.get(message.getFrom().split("/")[0]);
 						contacto.addMessage(message);
-						FicheroXML.escribeFichero(contacto.getMensajes(), contacto.getNombre());
+						FicheroXML.escribeFichero(contacto.getMensajes(),
+								UtilidadesServidor.scon.getUser().split("@")[0]+contacto.getNombre());
 						contactos.put(contacto.getId(), contacto);
 
 						Platform.runLater(() -> {

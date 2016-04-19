@@ -145,7 +145,8 @@ public class ControladorConversacion extends Contacto implements Initializable
 					chat.sendMessage(ms);
 
 					texto.clear();
-					FicheroXML.escribeFichero(contact.getMensajes(), contact.getNombre());
+					FicheroXML.escribeFichero(contact.getMensajes(),
+							UtilidadesServidor.scon.getUser().split("@")[0]+contact.getNombre());
 					
 				} 
 				catch (NotConnectedException e) 

@@ -17,6 +17,7 @@ import org.jivesoftware.smack.roster.Roster;
 import org.jivesoftware.smack.roster.RosterEntry;
 import org.jivesoftware.smackx.offline.OfflineMessageManager;
 
+import datos.FicheroXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert.AlertType;
@@ -27,33 +28,59 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import modelo.Contacto;
 import vistaControlador.ControladorChat;
+import vistaControlador.ControladorConfiguracion;
 
-public class UtilidadesChat 
-{
-	public Map<String,Contacto> getContacts() 
-	{
+public class UtilidadesChat {
+	public Map<String, Contacto> getContacts() {
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);
-		Map<String,Contacto> contactos = new HashMap<String,Contacto>();
-		Contacto cc;
-
-		for (RosterEntry entry : roster.getEntries()) 
+		
+		if(!roster.isLoaded())
 		{
+			try {
+				roster.reloadAndWait();
+			} catch (NotLoggedInException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NotConnectedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		Map<String, Contacto> contactos = new HashMap<String, Contacto>();
+		Contacto cc;
+		ControladorConfiguracion config = new ControladorConfiguracion();
+
+		for (RosterEntry entry : roster.getEntries()) {
 			cc = new Contacto();
 			cc.setFriend(true);
 			cc.setSelected(false);
-			cc.setId(entry.getUser()+"@"+Constantes.serviceName);
-			cc.setMensajes(new ArrayList<Message>());
+			cc.setId(entry.getUser() + "@" + Constantes.serviceName);
 			cc.setNombre(entry.getName());
 			cc.setPresencia(roster.getPresence(entry.getUser()).toString());
-			
-			contactos.put(cc.getNombre(),cc);
+
+			switch (config.getConfig().getAlmacenamiento()) {
+			case ("Online"): {
+				cc.setMensajes(UtilidadesConversacion.getOnlineHistory(new BD(), UtilidadesServidor.scon.getUser().split("/")[0],
+						entry.getUser()+"@"+Constantes.host));
+				break;
+			}
+			case ("Local"): {
+				cc.setMensajes(FicheroXML.leeFichero(entry.getUser()));
+				break;
+			}
+			}
+
+			contactos.put(cc.getNombre(), cc);
 		}
 
 		return contactos;
 	}
-	
-	public void anadirContacto() 
-	{
+
+	public void anadirContacto() {
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);
 		System.out.println("Boton añadir del menu pulsado");
 		TextInputDialog dialog = new TextInputDialog();
@@ -75,9 +102,10 @@ public class UtilidadesChat
 			} catch (NotLoggedInException e) {
 				System.out.println("Error de no logeado");
 			}
-			
+
 		} else {
-			UtilidadesOtros.alerta(AlertType.INFORMATION, "Aviso", "El usuario introducido no esta registrado en la aplicacion");
+			UtilidadesOtros.alerta(AlertType.INFORMATION, "Aviso",
+					"El usuario introducido no esta registrado en la aplicacion");
 		}
 
 	}
@@ -85,34 +113,23 @@ public class UtilidadesChat
 	public void eliminarContacto(String string) {
 
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);
-		
-        RosterEntry re=roster.getEntry(string);
-        try 
-        {
+
+		RosterEntry re = roster.getEntry(string);
+		try {
 			roster.removeEntry(re);
 			roster.reload();
-		} 
-        catch (NoResponseException e) 
-        {
-        	System.out.println("Error de no respuesta");
-		}
-        catch (XMPPErrorException e) 
-        {
-        	System.out.println("Error de XMPP");
-		}
-        catch (NotConnectedException e) 
-        {
-        	System.out.println("Error de no conexion");
-		} 
-        catch (NotLoggedInException e) 
-        {
+		} catch (NoResponseException e) {
+			System.out.println("Error de no respuesta");
+		} catch (XMPPErrorException e) {
+			System.out.println("Error de XMPP");
+		} catch (NotConnectedException e) {
+			System.out.println("Error de no conexion");
+		} catch (NotLoggedInException e) {
 			System.out.println("Error de no logeado");
 		}
-    }
+	}
 
-	public List<Message> getOfflineMessages()
-			throws NoResponseException, XMPPErrorException, NotConnectedException 
-	{
+	public List<Message> getOfflineMessages() throws NoResponseException, XMPPErrorException, NotConnectedException {
 		OfflineMessageManager omm = new OfflineMessageManager(UtilidadesServidor.scon);
 		List<Message> mensajes = null;
 
@@ -127,65 +144,60 @@ public class UtilidadesChat
 
 		return mensajes;
 	}
-	
-	public void asignaMensajes(Map<String,Contacto> contactos , List<Message> mensajesOff)
-	{		
-		for(Message mensaje : mensajesOff)
-		{
+
+	public void asignaMensajes(Map<String, Contacto> contactos, List<Message> mensajesOff) {
+		for (Message mensaje : mensajesOff) {
 			Contacto cto = contactos.get(mensaje.getFrom().split("@")[0]);
-			
-			if(cto!=null)
-			{
-				cto.addMessage(mensaje);				
-			}
-			else
-			{
+
+			if (cto != null) {
+				cto.addMessage(mensaje);
+			} else {
 				cto = new Contacto();
 				cto.setNombre(mensaje.getFrom());
 				cto.setId(mensaje.getFrom());
 				cto.setFriend(false);
-				cto.setMensajes(new ArrayList<Message>(){{add(mensaje);}});
+				cto.setMensajes(new ArrayList<Message>() {
+					{
+						add(mensaje);
+					}
+				});
 			}
 			contactos.put(cto.getId(), cto);
-		}		
+		}
 		mensajesOff.clear();
 	}
-	
-	public static void labelGenerator(String texto,Pos pos,String color)
-	{
-		StackPane pane = new StackPane();  
+
+	public static void labelGenerator(String texto, Pos pos, String color) {
+		StackPane pane = new StackPane();
 		Text txt = new Text();
 		HBox hbox = new HBox();
-		
+
 		BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
 		FontMetrics fm = img.getGraphics().getFontMetrics();
 		double width = fm.stringWidth(texto);
-		
+
 		pane.getChildren().add(txt);
 		txt.setText(texto);
-		txt.setFont(Font.font ("Verdana", 11));
-		
-		if(width>150)
-		{
+		txt.setFont(Font.font("Verdana", 11));
+
+		if (width > 150) {
 			txt.setWrappingWidth(150);
 			pane.setMaxWidth(150);
-    		pane.setPrefWidth(150);
-		}
-		else
-		{
+			pane.setPrefWidth(150);
+		} else {
 			pane.setMaxWidth(width);
-    		pane.setPrefWidth(width);
+			pane.setPrefWidth(width);
 		}
-		
 
-		pane.setStyle("-fx-background-color: "+color+"; -fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 5;");             		
-		StackPane.setAlignment(txt,pos);
-		pane.setPadding(new Insets(5,5,5,5));
-		
+		pane.setStyle(
+				"-fx-background-color: " + color + "; -fx-background-radius: 5; -fx-border-radius: 5; -fx-padding: 5;");
+		StackPane.setAlignment(txt, pos);
+		pane.setPadding(new Insets(5, 5, 5, 5));
+
 		hbox.getChildren().add(pane);
 		hbox.setAlignment(pos);
-		
-		ControladorChat.conversacionActual.setMargin(hbox,new Insets(5,5,5,5));
+
+		ControladorChat.conversacionActual.setMargin(hbox, new Insets(5, 5, 5, 5));
 		ControladorChat.conversacionActual.addChildren(hbox);
 	}
 }

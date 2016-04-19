@@ -8,7 +8,11 @@ import org.jivesoftware.smack.chat.Chat;
 import org.jivesoftware.smack.chat.ChatManager;
 import org.jivesoftware.smack.packet.Message;
 
+import com.sun.jna.Platform;
+
 import datos.FicheroXML;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +21,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -35,23 +40,23 @@ public class ControladorConversacion extends Contacto implements Initializable {
 	private Label contacto;
 	@FXML
 	private VBox vbox;
-	
+	@FXML
+	private ScrollPane scrollPane;
+
 	private Contacto contact;
-	
-	public void setContact(Contacto contacto)
-	{
+
+	public void setContact(Contacto contacto) {
 		super.setId(contacto.getId());
 		super.setFriend(contacto.isFriend());
 		super.setMensajes(contacto.getMensajes());
 		super.setNombre(contacto.getNombre());
 		super.setPresencia(contacto.getPresencia());
 		super.setSelected(contacto.isSelected());
-		this.contact=contacto;
-		
+		this.contact = contacto;
+
 	}
-	
-	public Contacto getContact()
-	{
+
+	public Contacto getContact() {
 		Contacto contacto = new Contacto();
 
 		contacto.setFriend(super.isFriend());
@@ -60,10 +65,10 @@ public class ControladorConversacion extends Contacto implements Initializable {
 		contacto.setNombre(super.getNombre());
 		contacto.setPresencia(super.getPresencia());
 		contacto.setSelected(super.isSelected());
-		
+
 		return contacto;
 	}
-	
+
 	public void setContacto(Label contacto) {
 		this.contacto = contacto;
 	}
@@ -92,43 +97,48 @@ public class ControladorConversacion extends Contacto implements Initializable {
 
 		this.contacto.setText(contacto);
 	}
-	
-	public void setMargin(Node node,Insets i)
-	{
-		VBox.setMargin(node,i);
+
+	public void setMargin(Node node, Insets i) {
+		VBox.setMargin(node, i);
 	}
-	
-	public void addChildren(Node node)
-	{
+
+	public void addChildren(Node node) {
 		vbox.getChildren().add(node);
 	}
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) 
-	{
+	public void initialize(URL location, ResourceBundle resources) {
+		scrollPane.setVvalue(1.0);
 		
+		scrollPane.contentProperty().addListener(new ChangeListener() {
+			@Override
+			public void changed(ObservableValue ov, Object t, Object t1) {
+
+				scrollPane.setVvalue(scrollPane.getVmax());
+			}
+		});
+
 		enviar.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
-			public void handle(MouseEvent event) 
-			{
+			public void handle(MouseEvent event) {
 				Message msg = new Message();
 
-				try 
-				{
-					Chat chat=ChatManager.getInstanceFor(UtilidadesServidor.scon).createChat(contact.getNombre()+"@"+Constantes.serviceName+"/Smack");
+				try {
+					Chat chat = ChatManager.getInstanceFor(UtilidadesServidor.scon)
+							.createChat(contact.getNombre() + "@" + Constantes.serviceName + "/Smack");
 					msg.setBody(texto.getText());
 					msg.setFrom(UtilidadesServidor.scon.getUser());
-					msg.setTo(contact.getNombre()+"@"+Constantes.serviceName+"/Smack");
-					UtilidadesChat.labelGenerator(msg.getBody(),Pos.TOP_RIGHT,"blue");
+					msg.setTo(contact.getNombre() + "@" + Constantes.serviceName + "/Smack");
+					UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_RIGHT, "paleturquoise");
 					contact.addMessage(msg);
-					Message ms= new Message(msg.getTo(), msg.getBody()); 
+					Message ms = new Message(msg.getTo(), msg.getBody());
 					chat.sendMessage(ms);
-					
+
 					texto.clear();
-					FicheroXML.escribeFichero(contact.getMensajes(),contact.getNombre());
-				} 
-					catch (NotConnectedException e) {
+					FicheroXML.escribeFichero(contact.getMensajes(), contact.getNombre());
+					
+				} catch (NotConnectedException e) {
 					System.out.println("Error al mandar chat");
 				}
 			}

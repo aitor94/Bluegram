@@ -19,7 +19,7 @@ import utilities.UtilidadesServidor;
 public class FicheroXML {
 
 	private static final String path = "history/";
-	private static final String pathConfig="config/";
+	private static final String pathConfig = "config/";
 
 	public static String getPath() {
 		return path;
@@ -33,7 +33,7 @@ public class FicheroXML {
 		for (Message m : listaMessages) {
 			Mensaje ms = new Mensaje();
 			if (m.getBody() == null || m.getFrom() == null || m.getTo() == null)
-				System.out.println("error, mensajes incompletos"+m.toString());
+				System.out.println("error, mensajes incompletos" + m.toString());
 			else {
 				ms.setBody(m.getBody());
 				ms.setFrom(m.getFrom());
@@ -47,7 +47,9 @@ public class FicheroXML {
 			jaxbContext = JAXBContext.newInstance(Historial.class);
 			Marshaller marshaller = jaxbContext.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			marshaller.marshal(lista, new File(path + contacto + ".xml"));
+			File f = new File(path + contacto + ".xml");
+			f.getParentFile().mkdirs();
+			marshaller.marshal(lista, f);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
@@ -83,28 +85,29 @@ public class FicheroXML {
 
 	}
 
-	public static void escribeConfig(Configuracion config){
+	public static void escribeConfig(Configuracion config) {
 		JAXBContext jaxbContext;
-		
+
 		try {
 			jaxbContext = JAXBContext.newInstance(Configuracion.class);
 			Marshaller marshaller = jaxbContext.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			marshaller.marshal(config, new File(pathConfig + UtilidadesServidor.scon.getUser().split("@")[0]+"_config.xml"));
+			File f = new File(pathConfig + UtilidadesServidor.scon.getUser().split("@")[0] + "_config.xml");
+			f.getParentFile().mkdirs();
+			marshaller.marshal(config, f);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public static Configuracion leeConfig()
-	{
+
+	public static Configuracion leeConfig() {
 		JAXBContext jaxbContext;
-		Configuracion config=null;
+		Configuracion config = null;
 
 		try {
 			jaxbContext = JAXBContext.newInstance(Configuracion.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-			File xml = new File(pathConfig + UtilidadesServidor.scon.getUser().split("@")[0]+"_config.xml");
+			File xml = new File(pathConfig + UtilidadesServidor.scon.getUser().split("@")[0] + "_config.xml");
 			if (xml.exists())
 				config = (Configuracion) unmarshaller.unmarshal(xml);
 			else
@@ -113,5 +116,13 @@ public class FicheroXML {
 			e.printStackTrace();
 		}
 		return config;
+	}
+
+	public static void eliminaHistorial() {
+		File dir = new File(path);
+		for (File file : dir.listFiles()) {
+			if (!file.isDirectory())
+				file.delete();
+		}
 	}
 }

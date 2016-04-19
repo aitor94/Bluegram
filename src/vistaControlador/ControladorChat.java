@@ -33,6 +33,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import modelo.Configuracion;
 import modelo.Contacto;
 import utilities.UtilidadesChat;
 import utilities.UtilidadesOtros;
@@ -105,7 +106,7 @@ public class ControladorChat implements Initializable {
 					try {
 						panelChat.getChildren().add(loader.load());
 						conversacionActual = loader.getController();
-						contacto.setMensajes(FicheroXML.leeFichero(contacto.getNombre()));
+						//contacto.setMensajes(FicheroXML.leeFichero(contacto.getNombre()));
 						contacto.setSelected(true);
 
 						conversacionActual.setContact(contacto);
@@ -114,9 +115,9 @@ public class ControladorChat implements Initializable {
 							for (Message msg : contacto.getMensajes()) {
 								if (msg.getFrom() != null) {
 									if ((msg.getFrom().split("@")[0]).equals(contacto.getNombre()))
-										UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_LEFT, "green");
+										UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_LEFT, "lightgreen");
 									else
-										UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_RIGHT, "blue");
+										UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_RIGHT, "paleturquoise");
 								}
 							}
 						}
@@ -180,7 +181,7 @@ public class ControladorChat implements Initializable {
 
 						Platform.runLater(() -> {
 							if (contacto.isSelected())
-								UtilidadesChat.labelGenerator(message.getBody(), Pos.TOP_RIGHT, "green");
+								UtilidadesChat.labelGenerator(message.getBody(), Pos.TOP_RIGHT, "lightgreen");
 
 						});
 					}
@@ -191,6 +192,9 @@ public class ControladorChat implements Initializable {
 
 	public void logout() {
 		UtilidadesServidor.scon.disconnect();
+		ControladorConfiguracion config = new ControladorConfiguracion();
+		if(config.getConfig().isEliminaHistorial())
+			FicheroXML.eliminaHistorial();
 		UtilidadesOtros.ventanaFXML("/vistaControlador/Login.fxml", listaContactos.getScene());
 	}
 }

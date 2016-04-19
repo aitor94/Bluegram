@@ -19,7 +19,7 @@ public class UtilidadesServidor {
 	public static XMPPTCPConnection scon;
 	
 	public static XMPPTCPConnection ServerConnection (String user,String pass) {
-		SmackConfiguration.DEBUG = true;
+		//SmackConfiguration.DEBUG = true;
 		SSLContext ssl=null;
 		try {
 			ssl = SSLContext.getInstance("TLS");

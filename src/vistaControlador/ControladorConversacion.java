@@ -21,6 +21,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import modelo.Contacto;
@@ -34,6 +36,13 @@ public class ControladorConversacion extends Contacto implements Initializable
 	@FXML private Label contacto;
 	@FXML private VBox vbox;
 	@FXML private ScrollPane scrollPane;
+	@FXML public void handleEnterPressed(KeyEvent event)
+	{
+	    if (event.getCode() == KeyCode.ENTER) 
+	    {
+	    	enviarMensaje();
+	    }
+	}
 	
 	public VBox getVbox() 
 	{
@@ -130,29 +139,7 @@ public class ControladorConversacion extends Contacto implements Initializable
 			@Override
 			public void handle(MouseEvent event) 
 			{
-				Message msg = new Message();
-
-				try 
-				{
-					Chat chat = ChatManager.getInstanceFor(UtilidadesServidor.scon)
-							.createChat(contact.getId());
-					msg.setBody(texto.getText());
-					msg.setFrom(UtilidadesServidor.scon.getUser());
-					msg.setTo(contact.getId());
-					UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_LEFT, "paleturquoise");
-					contact.addMessage(msg);
-					Message ms = new Message(msg.getTo(), msg.getBody());
-					chat.sendMessage(ms);
-
-					texto.clear();
-					FicheroXML.escribeFichero(contact.getMensajes(),
-							UtilidadesServidor.scon.getUser().split("@")[0]+contact.getNombre());
-					
-				} 
-				catch (NotConnectedException e) 
-				{
-					System.out.println("Error al mandar chat");
-				}
+				enviarMensaje();
 			}
 
 		});
@@ -166,5 +153,32 @@ public class ControladorConversacion extends Contacto implements Initializable
 	        }
 		});
 		
+	}
+	
+	public void enviarMensaje()
+	{
+		Message msg = new Message();
+
+		try 
+		{
+			Chat chat = ChatManager.getInstanceFor(UtilidadesServidor.scon)
+					.createChat(contact.getId());
+			msg.setBody(texto.getText());
+			msg.setFrom(UtilidadesServidor.scon.getUser());
+			msg.setTo(contact.getId());
+			UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_LEFT, "paleturquoise");
+			contact.addMessage(msg);
+			Message ms = new Message(msg.getTo(), msg.getBody());
+			chat.sendMessage(ms);
+
+			texto.clear();
+			FicheroXML.escribeFichero(contact.getMensajes(),
+					UtilidadesServidor.scon.getUser().split("@")[0]+contact.getNombre());
+			
+		} 
+		catch (NotConnectedException e) 
+		{
+			System.out.println("Error al mandar chat");
+		}
 	}
 }

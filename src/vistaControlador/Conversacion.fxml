@@ -8,16 +8,16 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="275.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="vistaControlador.ControladorConversacion">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="315.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vistaControlador.ControladorConversacion">
   <children>
     <Pane prefHeight="369.0" prefWidth="275.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <TextArea fx:id="texto" layoutX="2.0" layoutY="317.0" prefHeight="46.0" prefWidth="196.0" wrapText="true" />
-        <Button fx:id="enviar" layoutX="198.0" layoutY="317.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="59.0" text="Enviar" />
+        <TextArea fx:id="texto" layoutX="2.0" layoutY="317.0" onKeyPressed="#handleEnterPressed" prefHeight="46.0" prefWidth="240.0" wrapText="true" />
+        <Button fx:id="enviar" layoutX="244.0" layoutY="317.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="59.0" text="Enviar" />
         <Label fx:id="contacto" layoutX="-2.0" layoutY="14.0" prefHeight="17.0" prefWidth="275.0" />
-        <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" layoutY="31.0" prefHeight="280.0" prefWidth="275.0">
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" layoutY="31.0" prefHeight="280.0" prefWidth="315.0" style="-fx-border-width: 0; -fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5;">
           <content>
-            <VBox fx:id="vbox" alignment="TOP_RIGHT" prefHeight="280.0" prefWidth="273.0" />
+            <VBox fx:id="vbox" alignment="TOP_RIGHT" prefHeight="280.0" prefWidth="310.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-radius: 5;" />
           </content>
         </ScrollPane>
       </children>

@@ -23,12 +23,14 @@ public class UtilidadesConversacion {
 				ms.setBody(ma.getBody());
 				ms.setFrom(ma.getFromJID());
 				ms.setTo(ma.getToJID());
+				ms.setSubject("txt");
 				check = true;
 			} else {
 				if (ma.getToJID().matches(from) && ma.getFromJID().matches(to)) {
 					ms.setBody(ma.getBody());
 					ms.setFrom(ma.getFromJID());
 					ms.setTo(ma.getToJID());
+					ms.setSubject("txt");
 					check = true;
 				}
 				else
@@ -38,7 +40,6 @@ public class UtilidadesConversacion {
 				msg.add(ms);
 			check = false;
 		}
-		FicheroXML.escribeFichero(msg, to.split("@")[0]);
 		return msg;
 	}
 }

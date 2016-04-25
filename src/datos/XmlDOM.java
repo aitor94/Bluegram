@@ -11,6 +11,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class XmlDOM {
@@ -54,7 +55,10 @@ public class XmlDOM {
 			Transformer transformer = transformerFactory.newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File(path+".xml"));
+			File f=new File(path+".xml");
+			if(!f.exists())
+				f.getParentFile().mkdirs();
+			StreamResult result = new StreamResult(f);
 			transformer.transform(source, result);
 
 			
@@ -68,12 +72,15 @@ public class XmlDOM {
 	public static void xmlModify(Message msg,String path) {
 
 		try {
-			File inputFile = new File(path+".xml");
-			inputFile.getParentFile().mkdirs();
-			inputFile.createNewFile();
+			File f= new File(path+".xml");
+			if(!f.exists())
+			{
+				f.getParentFile().mkdirs();
+				crearFichero(new ArrayList<Message>(),path);
+			}
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-			Document doc = docBuilder.parse(inputFile);
+			Document doc = docBuilder.parse(f);
 			
 			Node historial=doc.getFirstChild();
 			
@@ -102,7 +109,7 @@ public class XmlDOM {
 			Transformer transformer = transformerFactory.newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(path+".xml");
+			StreamResult result = new StreamResult(f);
 			transformer.transform(source, result);
 
 		} catch (Exception e) {

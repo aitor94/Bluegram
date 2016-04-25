@@ -1,5 +1,6 @@
 package modelo;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -19,7 +20,7 @@ public class Mensaje {
 		this.body = body;
 	}
 	
-	@XmlElement
+	@XmlAttribute
 	public String getFrom() {
 		return from;
 	}
@@ -28,7 +29,7 @@ public class Mensaje {
 		this.from = from;
 	}
 
-	@XmlElement
+	@XmlAttribute
 	public String getTo() {
 		return to;
 	}
@@ -37,7 +38,7 @@ public class Mensaje {
 		this.to = to;
 	}
 	
-	@XmlElement
+	@XmlAttribute
 	public String getSubject() {
 		return subject;
 	}

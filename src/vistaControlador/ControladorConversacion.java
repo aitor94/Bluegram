@@ -48,7 +48,7 @@ public class ControladorConversacion extends Contacto implements Initializable
 	@FXML private ScrollPane scrollPane;
 	@FXML public void handleEnterPressed(KeyEvent event)
 	{
-	    if (event.getCode() == KeyCode.ENTER) 
+	    if (event.getCode() == KeyCode.ENTER && !texto.getText().isEmpty()) 
 	    {
 	    	enviarMensaje();
 	    }
@@ -172,7 +172,7 @@ public class ControladorConversacion extends Contacto implements Initializable
 			ms.setSubject("txt");
 			chat.sendMessage(ms);
 
-			FicheroXML.escribeFichero(contact.getMensajes(),
+			FicheroXML.escribeMensaje(msg,
 					UtilidadesServidor.scon.getUser().split("@")[0]+contact.getNombre());
 			
 		} 

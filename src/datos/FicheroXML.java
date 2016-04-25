@@ -25,35 +25,12 @@ public class FicheroXML {
 		return path;
 	}
 
-	public static void escribeFichero(List<Message> listaMessages, String contacto) {
-		JAXBContext jaxbContext;
-		Historial lista = new Historial();
-		List<Mensaje> listaMensajes = new ArrayList<Mensaje>();
-
-		for (Message m : listaMessages) {
-			Mensaje ms = new Mensaje();
-			if (m.getBody() == null || m.getFrom() == null || m.getTo() == null || m.getSubject() == null)
-				System.out.println("error, mensajes incompletos" + m.toString());
-			else {
-				ms.setBody(m.getBody());
-				ms.setFrom(m.getFrom());
-				ms.setTo(m.getTo());
-				ms.setSubject(m.getSubject());
-				listaMensajes.add(ms);
-			}
-		}
-
-		lista.setLista(listaMensajes);
-		try {
-			jaxbContext = JAXBContext.newInstance(Historial.class);
-			Marshaller marshaller = jaxbContext.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			File f = new File(path + contacto + ".xml");
+	public static void escribeFichero(List<Message> listaMessages, String contacto) 
+	{
+		File f= new File(path);
+		if(!f.exists())
 			f.getParentFile().mkdirs();
-			marshaller.marshal(lista, f);
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
+		XmlDOM.crearFichero(listaMessages, path+contacto);
 	}
 
 	public static List<Message> leeFichero(String nombre) {
@@ -120,6 +97,17 @@ public class FicheroXML {
 		return config;
 	}
 
+	public static void escribeMensaje(Message mensaje,String contacto)
+	{
+		File f= new File(path+contacto+".xml");
+		if(!f.exists())
+		{
+			f.getParentFile().mkdirs();
+			XmlDOM.crearFichero(new ArrayList<Message>(),path+contacto);
+		}
+		XmlDOM.xmlModify(mensaje, path+contacto);
+	}
+	
 	public static void eliminaHistorial() {
 		File dir = new File(path);
 		for (File file : dir.listFiles()) {

@@ -205,7 +205,7 @@ public class ControladorChat implements Initializable
 						}
 						contacto.addMessage(message);
 						
-						FicheroXML.escribeFichero(contacto.getMensajes(),
+						FicheroXML.escribeMensaje(message,
 								UtilidadesServidor.scon.getUser().split("@")[0]+contacto.getNombre());
 						
 						contactos.put(contacto.getId(), contacto);

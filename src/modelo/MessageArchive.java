@@ -53,7 +53,7 @@ public class MessageArchive {
 	public String getFromJID() {
 		return fromJID;
 	}
-	public void setFromJID(String fromJID) {
+	public void setFromJID(String fromJID) /*user@host*/{
 		this.fromJID = fromJID;
 	}
 	public BigInteger getConversationID() {

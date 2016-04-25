@@ -27,9 +27,6 @@ public class FicheroXML {
 
 	public static void escribeFichero(List<Message> listaMessages, String contacto) 
 	{
-		File f= new File(path);
-		if(!f.exists())
-			f.getParentFile().mkdirs();
 		XmlDOM.crearFichero(listaMessages, path+contacto);
 	}
 
@@ -99,12 +96,7 @@ public class FicheroXML {
 
 	public static void escribeMensaje(Message mensaje,String contacto)
 	{
-		File f= new File(path+contacto+".xml");
-		if(!f.exists())
-		{
-			f.getParentFile().mkdirs();
-			XmlDOM.crearFichero(new ArrayList<Message>(),path+contacto);
-		}
+		
 		XmlDOM.xmlModify(mensaje, path+contacto);
 	}
 	

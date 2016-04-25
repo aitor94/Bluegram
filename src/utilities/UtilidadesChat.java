@@ -2,6 +2,7 @@ package utilities;
 
 import java.awt.FontMetrics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import org.jivesoftware.smack.roster.RosterEntry;
 import org.jivesoftware.smackx.offline.OfflineMessageManager;
 
 import datos.FicheroXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert.AlertType;
@@ -27,6 +29,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import modelo.Contacto;
+import vistaControlador.ControladorBotonDescarga;
 import vistaControlador.ControladorChat;
 import vistaControlador.ControladorConfiguracion;
 
@@ -147,7 +150,8 @@ public class UtilidadesChat
 			mensajes = omm.getMessages();
 			omm.deleteMessages();
 			System.out.println("varios mensajes offline->" + mensajes.size());
-		}
+		}for( Message msg:mensajes )
+			System.out.println(msg.getSubject());
 		return mensajes;
 	}
 
@@ -171,7 +175,7 @@ public class UtilidadesChat
 				cto.setMensajes(new ArrayList<Message>() 
 				{
 					{
-							add(mensaje);
+							add(mensaje);System.out.println(mensaje.getSubject());
 					}
 				});
 			}
@@ -217,5 +221,23 @@ public class UtilidadesChat
 
 		ControladorChat.conversacionActual.setMargin(hbox, new Insets(5, 5, 5, 5));
 		ControladorChat.conversacionActual.addChildren(hbox);
+	}
+	
+	public void downloadGenerator(String name, String key)
+	{
+		FXMLLoader loader = new FXMLLoader(getClass()
+				.getResource("/vistaControlador/Descarga.fxml"));
+	
+		try 
+		{
+			ControladorChat.conversacionActual.addChildren(loader.load());
+			ControladorBotonDescarga cbd = loader.getController();
+			cbd.setName(name);
+			cbd.setKey(key);
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}		
 	}
 }

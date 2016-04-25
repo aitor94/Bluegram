@@ -111,21 +111,32 @@ public class ControladorChat implements Initializable
 					
 					try 
 					{
+						if(panelChat.getChildren().size()>0)
+							panelChat.getChildren().remove(0);
 						panelChat.getChildren().add(loader.load());
 						conversacionActual = loader.getController();
 						contacto.setSelected(true);
 
 						conversacionActual.setContact(contacto);
+						conversacionActual.setTitulo(contacto.getNombre());
 						if (contacto.getMensajes() != null) 
 						{
 							for (Message msg : contacto.getMensajes()) 
-							{
+							{System.out.println(msg.getSubject());
 								if (msg.getFrom() != null) 
 								{
-									if (msg.getFrom().split("/")[0].equals(contacto.getId()))
-										UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_RIGHT, "lightgreen");
-									else
-										UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_LEFT, "paleturquoise");
+									if(msg.getSubject().startsWith("txt"))
+									{
+										if (msg.getFrom().split("/")[0].equals(contacto.getId()))
+											UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_RIGHT, "lightgreen");
+										else
+											UtilidadesChat.labelGenerator(msg.getBody(), Pos.TOP_LEFT, "paleturquoise");
+									}
+									if(msg.getSubject().startsWith("file"))
+									{
+										UtilidadesChat uc = new UtilidadesChat();
+										uc.downloadGenerator(msg.getSubject().split("/")[1],msg.getBody());
+									}
 								}
 							}
 						}
@@ -183,14 +194,35 @@ public class ControladorChat implements Initializable
 					public void processMessage(Chat chat, Message message) 
 					{						
 						Contacto contacto = contactos.get(message.getFrom().split("/")[0]);
+						if(contacto == null)
+						{
+							contacto = new Contacto();
+							contacto.setFriend(false);
+							contacto.setSelected(false);
+							contacto.setId(chat.getParticipant() + "@" + Constantes.serviceName);
+							contacto.setNombre(chat.getParticipant());
+							contacto.setPresencia(null);
+						}
 						contacto.addMessage(message);
+						
 						FicheroXML.escribeFichero(contacto.getMensajes(),
 								UtilidadesServidor.scon.getUser().split("@")[0]+contacto.getNombre());
+						
 						contactos.put(contacto.getId(), contacto);
 
+						boolean boo = contacto.isSelected();
+						
 						Platform.runLater(() -> {
-							if (contacto.isSelected())
-								UtilidadesChat.labelGenerator(message.getBody(), Pos.TOP_RIGHT, "lightgreen");
+							if (boo)
+							{
+								if(message.getSubject().startsWith("txt"))
+									UtilidadesChat.labelGenerator(message.getBody(), Pos.TOP_RIGHT, "lightgreen");
+								if(message.getSubject().startsWith("file"))
+								{
+									UtilidadesChat uc = new UtilidadesChat();
+									uc.downloadGenerator(message.getSubject().split("/")[1],message.getBody());
+								}
+							}
 						});
 					}
 				});

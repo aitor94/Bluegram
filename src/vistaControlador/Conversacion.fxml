@@ -12,9 +12,12 @@
   <children>
     <Pane prefHeight="369.0" prefWidth="275.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <TextArea fx:id="texto" layoutX="2.0" layoutY="317.0" onKeyPressed="#handleEnterPressed" prefHeight="46.0" prefWidth="240.0" wrapText="true" />
+        <TextArea fx:id="texto" layoutX="2.0" layoutY="317.0" onKeyPressed="#handleEnterPressed" onKeyReleased="#handleEnterReleased" prefHeight="46.0" prefWidth="240.0" wrapText="true" />
         <Button fx:id="enviar" layoutX="244.0" layoutY="317.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="59.0" text="Enviar" />
-        <Label fx:id="contacto" layoutX="-2.0" layoutY="14.0" prefHeight="17.0" prefWidth="275.0" />
+        <Label fx:id="contacto" alignment="CENTER" contentDisplay="CENTER" layoutX="149.0" layoutY="14.0" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font></Label>
         <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" layoutY="31.0" prefHeight="280.0" prefWidth="315.0" style="-fx-border-width: 0; -fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5;">
           <content>
             <VBox fx:id="vbox" alignment="TOP_RIGHT" prefHeight="280.0" prefWidth="310.0" style="-fx-background-color: white; -fx-background-radius: 5; -fx-border-radius: 5;" />

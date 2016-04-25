@@ -89,5 +89,17 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/spark-core_2.9.3-0.8.0-incubating.jar"/>
 	<classpathentry kind="lib" path="lib/api-util-1.0.0-m17.jar"/>
+	<classpathentry kind="lib" path="lib/aws-java-sdk-1.10.71-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/aws-java-sdk-1.10.71-sources.jar"/>
+	<classpathentry kind="lib" path="lib/aws-java-sdk-1.10.71.jar"/>
+	<classpathentry kind="lib" path="lib/aws-java-sdk-flow-build-tools-1.10.71.jar"/>
+	<classpathentry kind="lib" path="lib/com.fasterxml.jackson.databind.jar"/>
+	<classpathentry kind="lib" path="lib/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/joda-time-2.4-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/joda-time-2.4-sources.jar"/>
+	<classpathentry kind="lib" path="lib/joda-time-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/com.fasterxml.jackson.core.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

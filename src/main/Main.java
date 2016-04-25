@@ -9,8 +9,8 @@ public class Main extends Application
 {
 	
 	@Override
-	public void start (Stage primaryStage) {
-		
+	public void start (Stage primaryStage) 
+	{		
 		Scene scene = UtilidadesOtros.escenaFXML("/vistaControlador/Principal.fxml");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
@@ -18,7 +18,8 @@ public class Main extends Application
 		primaryStage.show();
 	}
 	
-	public static void main (String[] args) {
+	public static void main (String[] args) 
+	{
 		launch(args);
 	}
 }

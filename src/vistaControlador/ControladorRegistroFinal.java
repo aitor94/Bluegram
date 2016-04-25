@@ -68,12 +68,12 @@ public class ControladorRegistroFinal implements Initializable
 						UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Error al crear cuenta");
 					}
 					
-					UtilidadesOtros.alerta(AlertType.CONFIRMATION, "¡Exito!", "¡Registro completado con exito!");
+					UtilidadesOtros.alerta(AlertType.CONFIRMATION, "ï¿½Exito!", "ï¿½Registro completado con exito!");
 					UtilidadesOtros.ventanaFXML("/vistaControlador/Principal.fxml", boton.getScene());
 					
 				}
 				else {
-					UtilidadesOtros.alerta(AlertType.ERROR, "Fallo de autenticacion", "¡La clave no es correcta!");
+					UtilidadesOtros.alerta(AlertType.ERROR, "Fallo de autenticacion", "ï¿½La clave no es correcta!");
 				}
 			}
 		});

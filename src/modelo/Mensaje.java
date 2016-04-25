@@ -8,6 +8,7 @@ public class Mensaje {
 	private String body;
 	private String from;
 	private String to;
+	private String subject;
 	
 	@XmlElement
 	public String getBody() {
@@ -34,5 +35,14 @@ public class Mensaje {
 
 	public void setTo(String to) {
 		this.to = to;
+	}
+	
+	@XmlElement
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 }

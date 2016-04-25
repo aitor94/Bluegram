@@ -32,12 +32,13 @@ public class FicheroXML {
 
 		for (Message m : listaMessages) {
 			Mensaje ms = new Mensaje();
-			if (m.getBody() == null || m.getFrom() == null || m.getTo() == null)
+			if (m.getBody() == null || m.getFrom() == null || m.getTo() == null || m.getSubject() == null)
 				System.out.println("error, mensajes incompletos" + m.toString());
 			else {
 				ms.setBody(m.getBody());
 				ms.setFrom(m.getFrom());
 				ms.setTo(m.getTo());
+				ms.setSubject(m.getSubject());
 				listaMensajes.add(ms);
 			}
 		}
@@ -74,12 +75,13 @@ public class FicheroXML {
 
 		List<Mensaje> ls = lista.getLista();
 
-		for (Mensaje m : ls) {
+		for (Mensaje m : ls) {System.out.println(m.getSubject());
 			Message msg = new Message();
 			msg.setBody(m.getBody());
 			msg.setFrom(m.getFrom());
 			msg.setTo(m.getTo());
-			l.add(msg);
+			msg.setSubject(m.getSubject());
+			l.add(msg);System.out.println(msg.getSubject());
 		}
 		return l;
 

@@ -1,27 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <historial>
-    <mensaje>
-        <body>ola tio</body>
-        <from>admin@macbook-pro-de-aitor.local/Smack</from>
-        <subject>txt</subject>
-        <to>juan@macbook-pro-de-aitor.local</to>
-    </mensaje>
-    <mensaje>
-        <body>paso foto</body>
-        <from>admin@macbook-pro-de-aitor.local/Smack</from>
-        <subject>txt</subject>
-        <to>juan@macbook-pro-de-aitor.local</to>
-    </mensaje>
-    <mensaje>
-        <body>IMG_0633.JPG646189</body>
-        <from>admin@macbook-pro-de-aitor.local/Smack</from>
-        <subject>file/IMG_0633.JPG</subject>
-        <to>juan@macbook-pro-de-aitor.local</to>
-    </mensaje>
-    <mensaje>
-        <body>de nada</body>
-        <from>admin@macbook-pro-de-aitor.local/Smack</from>
-        <subject>txt</subject>
-        <to>juan@macbook-pro-de-aitor.local</to>
-    </mensaje>
+<mensaje from="juan@macbook-pro-de-aitor.local/Smack" subject="file/AITOR.pdf" to="admin@macbook-pro-de-aitor.local">
+<body>AITOR.pdf699170</body>
+</mensaje>
+<mensaje from="admin@macbook-pro-de-aitor.local/Smack" subject="file/Memoria preliminar de la Empresa.pages" to="juan@macbook-pro-de-aitor.local">
+<body>Memoria preliminar de la Empresa.pages670261</body>
+</mensaje>
+<mensaje from="admin@macbook-pro-de-aitor.local/Smack" subject="file/irissss.wmv" to="juan@macbook-pro-de-aitor.local">
+<body>irissss.wmv240553</body>
+</mensaje>
+<mensaje from="admin@macbook-pro-de-aitor.local/Smack" subject="file/irissss.wmv" to="juan@macbook-pro-de-aitor.local">
+<body>irissss.wmv330605</body>
+</mensaje>
 </historial>

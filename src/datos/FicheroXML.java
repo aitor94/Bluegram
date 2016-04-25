@@ -27,7 +27,7 @@ public class FicheroXML {
 
 	public static void escribeFichero(List<Message> listaMessages, String contacto) 
 	{
-		File f= new File(path);
+		File f= new File(path+contacto+".xml");
 		if(!f.exists())
 			f.getParentFile().mkdirs();
 		XmlDOM.crearFichero(listaMessages, path+contacto);

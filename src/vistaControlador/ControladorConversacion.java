@@ -60,8 +60,6 @@ public class ControladorConversacion extends Contacto implements Initializable
 	    	texto.clear();
 	    }
 	}
-
-	//private List<ControladorBotonDescarga>
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
@@ -112,7 +110,7 @@ public class ControladorConversacion extends Contacto implements Initializable
     			ProgressIndicator pi = new ProgressIndicator();
     			Text txt = new Text();
     			
-    			pi.setProgress(-1);
+    			pi.setProgress(0);
     			pi.setVisible(true);
     			
                 Dragboard db = event.getDragboard();
@@ -123,7 +121,7 @@ public class ControladorConversacion extends Contacto implements Initializable
 	                filePath = file.getAbsolutePath();
 	                
 	                txt.setText("Enviando "+file.getName());
-	                //System.out.println(UtilidadesArchivos.sendFile(file.getName(),filePath));
+	                
 	                hb.getChildren().add(pi);
 	                hb.getChildren().add(txt);
 	                
@@ -132,7 +130,7 @@ public class ControladorConversacion extends Contacto implements Initializable
 	                
 	                vbox.getChildren().add(hb);
 	                
-	                Task<?> task = hiloSubida(file.getName(),filePath);
+	                Task<?> task = hiloSubida(file.getName(),filePath,pi);
 	                
 	                task.setOnSucceeded(new EventHandler<WorkerStateEvent>() 
 	        		{
@@ -182,7 +180,7 @@ public class ControladorConversacion extends Contacto implements Initializable
 		}
 	}
 	
-	public Task<Void> hiloSubida(String name, String path)
+	public Task<Void> hiloSubida(String name, String path,ProgressIndicator pi)
 	{
 		Task<Void> task = new Task<Void>() 
 		{
@@ -192,7 +190,7 @@ public class ControladorConversacion extends Contacto implements Initializable
 				String nam = name;
 				String pat = path;
 				System.out.println("realizando envio");
-				String key = UtilidadesArchivos.sendFile(nam,pat);
+				String key = UtilidadesArchivos.sendFile(nam,pat,pi);
                 System.out.println("Envio realizado"+key);
                 Chat chat = ChatManager.getInstanceFor(UtilidadesServidor.scon)
     					.createChat(contact.getId());

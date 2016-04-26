@@ -25,8 +25,8 @@ import javafx.scene.control.ProgressIndicator;
 public class UtilidadesArchivos 
 {
 	private static final String BucketName  = "blue222"; 
-    private static final String keyName = "AKIAJB6IOYUK4JQZECIQ";
-    private static final String secret = "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";
+	private static final String keyName = "";
+    private static final String secret = "";
     
     public static String sendFile(String name,String path,ProgressIndicator pi)
     {
@@ -46,7 +46,7 @@ public class UtilidadesArchivos
 	    }
 	    int n = (int) (100000 + Math.random() * 900000);
 	    nombre = nombre.concat(Integer.toString(n));
-	    System.out.println("empiezo a mandar");
+	    
 	    File f = new File(path);
 	    PutObjectRequest por = new PutObjectRequest(BucketName,nombre,f);
 
@@ -60,7 +60,7 @@ public class UtilidadesArchivos
 	    });
 	    
 	    s3Client.putObject(por);
-	    System.out.println("mandado");
+	    
 	    return nombre;
     }
     

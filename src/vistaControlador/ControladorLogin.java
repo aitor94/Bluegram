@@ -97,15 +97,15 @@ public class ControladorLogin implements Initializable
 					}
 				}
 
-				catch (SmackException e) {
+				catch (SmackException e) {e.printStackTrace();
 					UtilidadesOtros.alerta(AlertType.ERROR, "Error de conexion", "Error de conexion");
 				}
 
-				catch (IOException e) {
+				catch (IOException e) {e.printStackTrace();
 					UtilidadesOtros.alerta(AlertType.ERROR, "Error inesperado", "Error inesperado");
 				}
 
-				catch (XMPPException e) {
+				catch (XMPPException e) {e.printStackTrace();
 					UtilidadesOtros.alerta(AlertType.ERROR, "Error de autenticacion", "Usuario o contrasena erroneos");
 				}
 				finally{

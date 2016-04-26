@@ -15,7 +15,7 @@ public class BD {
 	public static final String bd = Constantes.bd;
 	public static final String login = Constantes.login;
 	public static final String password = Constantes.password;
-	public static final String url = "jdbc:mysql://localhost/" + bd;
+	public static final String url = "jdbc:mysql://52.24.157.51:3306/" + bd;
 	   
 	private Connection connection;
 	private Statement statement;

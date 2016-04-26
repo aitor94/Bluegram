@@ -10,6 +10,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
+import org.jivesoftware.smack.SmackConfiguration;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 
@@ -19,6 +20,7 @@ public class UtilidadesServidor {
 	
 	public static XMPPTCPConnection ServerConnection (String user,String pass) {
 		//SmackConfiguration.DEBUG = true;
+		SmackConfiguration.setDefaultPacketReplyTimeout(30000);
 		SSLContext ssl=null;
 		try {
 			ssl = SSLContext.getInstance("TLS");
@@ -58,6 +60,7 @@ public class UtilidadesServidor {
 				  .setCustomSSLContext(ssl)
 				  .setCompressionEnabled(false)
 				  .setSendPresence(false)
+				  .setConnectTimeout(30000)
 				  .build();
 		
 		XMPPTCPConnection con = new XMPPTCPConnection(config);

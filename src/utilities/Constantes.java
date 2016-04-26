@@ -4,11 +4,11 @@ public class Constantes {
 
 	// BD
 	public static final String bd = "opf"; // "opf";
-	public static final String login = "aitor"; // "aitor";
+	public static final String login = "root"; // "aitor";jdbc:mysql://52.24.157.51:3306/opf
 	public static final String password = "1234"; // "1234";
-	public static final String url = "jdbc:mysql://localhost/" + bd;
+	public static final String url = "jdbc:mysql://52.24.157.51:3306/" + bd;//localhost
 	
 	// Servidor
-	public static final String serviceName = "macbook-pro-de-aitor.local"; // "macbook-pro-de-aitor.local";
-	public static final String host = "macbook-pro-de-aitor.local"; // "macbook-pro-de-aitor.local";
+	public static final String serviceName = "ip-172-31-37-20"; // "macbook-pro-de-aitor.local";
+	public static final String host = "52.24.157.51"; // "macbook-pro-de-aitor.local";
 }

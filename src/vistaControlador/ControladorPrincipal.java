@@ -7,20 +7,17 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import utilities.UtilidadesOtros;
 
 public class ControladorPrincipal implements Initializable
 {
-	@FXML
-	private Pane panel_comienzo;
-	@FXML
-	private Pane panel_settings;
-	@FXML
-	private Pane panel_about;
-	@FXML
-	private Pane panel_salir;
+	@FXML private Pane panel_comienzo;
+	@FXML private Pane panel_settings;
+	@FXML private Pane panel_about;
+	@FXML private Pane panel_salir;
 
 	@Override
 	public void initialize (URL location, ResourceBundle resources) {
@@ -31,8 +28,7 @@ public class ControladorPrincipal implements Initializable
 		panel_salir.setStyle("-fx-background-color: lime;");
 
 		panel_comienzo.setOnMouseClicked (new EventHandler<MouseEvent>() {
-		// evento ventana login
-
+			
 			@Override
 			public void handle (MouseEvent event) {
 
@@ -47,6 +43,15 @@ public class ControladorPrincipal implements Initializable
 		    	panel_comienzo.setStyle("-fx-background-color: firebrick;");	
 			}			
 		});
+		
+		panel_comienzo.setOnTouchPressed(new EventHandler<TouchEvent>()
+				{
+					@Override
+					public void handle(TouchEvent event) 
+					{
+						panel_comienzo.setStyle("-fx-background-color: firebrick;");
+					}			
+				});
 		
 		panel_comienzo.setOnMouseReleased(new EventHandler<MouseEvent>() {
 
@@ -72,6 +77,15 @@ public class ControladorPrincipal implements Initializable
 			public void handle(MouseEvent event) {
 		    	panel_settings.setStyle("-fx-background-color: gold;");	
 			}	
+		});
+		
+		panel_settings.setOnTouchPressed(new EventHandler<TouchEvent>()
+		{
+			@Override
+			public void handle(TouchEvent event) 
+			{
+				panel_settings.setStyle("-fx-background-color: gold;");	
+			}			
 		});
 		
 		panel_settings.setOnMouseReleased(new EventHandler<MouseEvent>() {
@@ -126,6 +140,15 @@ public class ControladorPrincipal implements Initializable
 		    	panel_salir.setStyle("-fx-background-color: limegreen;");	
 			}
 		});
+		
+		panel_salir.setOnTouchPressed(new EventHandler<TouchEvent>()
+		{
+			@Override
+			public void handle(TouchEvent event) 
+			{System.out.println("touched");
+				panel_salir.setStyle("-fx-background-color: limegreen;");	
+			}			
+		});	
 		
 		panel_salir.setOnMouseReleased(new EventHandler<MouseEvent>() {
 

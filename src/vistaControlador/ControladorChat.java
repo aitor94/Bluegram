@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.Notifications;
 import org.jivesoftware.smack.SmackException.NoResponseException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.XMPPException.XMPPErrorException;
@@ -32,6 +33,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import modelo.Contacto;
 import utilities.Constantes;
 import utilities.UtilidadesChat;
@@ -48,6 +50,7 @@ public class ControladorChat implements Initializable
 
 	private ObservableList<String> itemsContactos = FXCollections.observableArrayList();
 	private UtilidadesChat uc;
+	private Stage stage;
 
 	public static ControladorConversacion conversacionActual;
 	public static Map<String, Contacto> contactos;
@@ -103,6 +106,9 @@ public class ControladorChat implements Initializable
 						contactos.put(contacto.getNombre(), contacto);
 					}
 					
+					if(conversacionActual.getStage()!=null)
+						conversacionActual.getStage().close();
+					
 					FXMLLoader loader = new FXMLLoader(getClass()
 							.getResource("/vistaControlador/Conversacion.fxml"));
 					
@@ -122,7 +128,7 @@ public class ControladorChat implements Initializable
 						if (contacto.getMensajes() != null) 
 						{
 							for (Message msg : contacto.getMensajes()) 
-							{System.out.println(msg.getSubject());
+							{
 								if (msg.getFrom() != null) 
 								{
 									if(msg.getSubject().startsWith("txt"))
@@ -199,9 +205,15 @@ public class ControladorChat implements Initializable
 							contacto = new Contacto();
 							contacto.setFriend(false);
 							contacto.setSelected(false);
-							contacto.setId(chat.getParticipant() + "@" + Constantes.serviceName);
-							contacto.setNombre(chat.getParticipant());
+							contacto.setId(chat.getParticipant().split("/")[0]);
+							contacto.setNombre(chat.getParticipant().split("@")[0]);
 							contacto.setPresencia(null);
+							contacto.setNumMensajes(1);
+								
+							Platform.runLater(() -> {
+								itemsContactos.add(chat.getParticipant()+" -> 1");
+								listaContactos.setItems(itemsContactos);
+							});
 						}
 						contacto.addMessage(message);
 						
@@ -222,6 +234,20 @@ public class ControladorChat implements Initializable
 									UtilidadesChat uc = new UtilidadesChat();
 									uc.downloadGenerator(message.getSubject().split("/")[1],message.getBody());
 								}
+							}
+							else
+							{
+								
+							}
+							
+							stage = (Stage) panelChat.getScene().getWindow();
+							if(stage.isIconified())
+							{								
+								Notifications.create()
+									.position(Pos.TOP_RIGHT)
+									.title("Mensaje recibido de "+chat.getParticipant().split("@")[0])
+									.text(message.getBody())
+									.showInformation();
 							}
 						});
 					}

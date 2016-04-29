@@ -3,6 +3,7 @@ package vistaControlador;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -49,7 +50,7 @@ public class ControladorBotonDescarga implements Initializable
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 		progressIndicator = new ProgressIndicator();
-		progressIndicator.setProgress(-1);
+		progressIndicator.setProgress(0);
 		progressIndicator.setVisible(true);
 		
 		boton.setOnMouseClicked(new EventHandler<MouseEvent>() 
@@ -57,18 +58,20 @@ public class ControladorBotonDescarga implements Initializable
 			@Override
 			public void handle(MouseEvent event) 
 			{
-				UtilidadesArchivos.receiveFile(key,"downloads/"+name);
-				hbox.getChildren().remove(progressIndicator);
-			}
-
-		});
-		
-		boton.setOnMouseReleased(new EventHandler<MouseEvent>() 
-		{
-			@Override
-			public void handle(MouseEvent event) 
-			{
 				hbox.getChildren().add(progressIndicator);
+				
+				Task<Void> task = new Task<Void>() 
+				{
+					@Override
+					public Void call() 
+					{
+						UtilidadesArchivos.receiveFile(key,"downloads/"+name,progressIndicator);
+						hbox.getChildren().remove(progressIndicator);
+						return null;
+					}
+				};
+				
+				new Thread(task).start();
 			}
 
 		});

@@ -24,9 +24,9 @@ import javafx.scene.control.ProgressIndicator;
 
 public class UtilidadesArchivos 
 {
-	private static final String BucketName  = "blue222"; 
-	private static final String keyName = "";
-    private static final String secret = "";
+	private static final String BucketName  = "blue2222"; 
+	private static final String keyName = "AKIAJGZQWMMDCX2EZLFQ";
+    private static final String secret = "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";
     
     public static String sendFile(String name,String path,ProgressIndicator pi)
     {
@@ -39,11 +39,14 @@ public class UtilidadesArchivos
 	    AmazonS3Client s3Client = new AmazonS3Client(credentials);
 	    
 	    int count = 0;
+	    String cad = nombre;
 	    while(s3Client.doesObjectExist(BucketName,nombre))
 	    {
 	    	count++;
-	    	nombre = nombre.concat("("+Integer.toString(count)+")");
+	    	cad = nombre.concat("("+Integer.toString(count)+")");
 	    }
+	    nombre = cad;
+	    
 	    int n = (int) (100000 + Math.random() * 900000);
 	    nombre = nombre.concat(Integer.toString(n));
 	    
@@ -64,22 +67,25 @@ public class UtilidadesArchivos
 	    return nombre;
     }
     
-    public static void receiveFile(String key, String path)
+    public static void receiveFile(String key, String path,ProgressIndicator pi)
     {
     	System.setProperty(SDKGlobalConfiguration.ENABLE_S3_SIGV4_SYSTEM_PROPERTY, "true");
         
     	AWSCredentials credentials = new BasicAWSCredentials(keyName,secret);
 	    AmazonS3Client s3Client = new AmazonS3Client(credentials);
-	    
+
 	    if(s3Client.doesObjectExist(BucketName,key))
-	    {
-	    	S3Object object = s3Client.getObject(new GetObjectRequest(BucketName,key));
-	    	
+	    {	
+	    	GetObjectRequest gor = new GetObjectRequest(BucketName,key);
+	    	S3Object object = s3Client.getObject(gor);
+	    
+	    	final double tam = (double) object.getObjectMetadata().getContentLength();
+
 	    	InputStream reader = new BufferedInputStream(object.getObjectContent());
     		File file = new File(path);
     		file.getParentFile().mkdirs();
     		OutputStream writer;
-    		
+    		System.out.println("empiezo a escribir");
     		try 
     		{
 				writer = new BufferedOutputStream(new FileOutputStream(file));
@@ -88,6 +94,7 @@ public class UtilidadesArchivos
         		while( ( read = reader.read() ) != -1 ) 
         		{
         		    writer.write(read);
+        		    pi.setProgress(1/tam+ pi.getProgress());
         		}
 
         		writer.flush();

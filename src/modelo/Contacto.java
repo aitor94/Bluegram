@@ -13,6 +13,7 @@ public class Contacto
 	private List<Message> mensajes;
 	private boolean isFriend;
 	private boolean isSelected;
+	private int numMensajes;
 	
 	public String getId() {
 		return id;
@@ -56,5 +57,11 @@ public class Contacto
 	}
 	public void setSelected(boolean isSelected) {
 		this.isSelected = isSelected;
+	}
+	public int getNumMensajes() {
+		return numMensajes;
+	}
+	public void setNumMensajes(int numMensajes) {
+		this.numMensajes = numMensajes;
 	}
 }

@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="210.0" prefWidth="287.0" style="-fx-background-color: paleturquoise;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vistaControlador.ControladorEmojis">
+   <children>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="210.0" prefWidth="287.0" style="-fx-background-color: paleturquoise;">
+         <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="210.0" prefWidth="287.0" style="-fx-background-color: paleturquoise;">
+               <content>
+                  <VBox fx:id="vbox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="210.0" prefWidth="287.0" style="-fx-background-color: paleturquoise;">
+                     <children>
+                        <HBox alignment="TOP_CENTER">
+                           <children>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin></Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER">
+                           <children>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER">
+                           <children>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER">
+                           <children>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER">
+                           <children>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER">
+                           <children>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER">
+                           <children>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER">
+                           <children>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_CENTER">
+                           <children>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button minHeight="40.0" minWidth="40.0" mnemonicParsing="false" style="-fx-background-color: white; -fx-background-radius: 17.5; -fx-border-color: black; -fx-border-radius: 17.5; -fx-border-width: 2;" text="a">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

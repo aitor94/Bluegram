@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.InlineStyleTextArea;
+import org.fxmisc.richtext.StyleClassedTextArea;
+import org.fxmisc.richtext.StyledDocument;
+import org.fxmisc.richtext.StyledTextArea;
 import org.jivesoftware.smack.SmackException.NoResponseException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.SmackException.NotLoggedInException;
@@ -28,6 +33,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import modelo.Contacto;
 import vistaControlador.ControladorBotonDescarga;
 import vistaControlador.ControladorChat;
@@ -151,7 +157,7 @@ public class UtilidadesChat
 			omm.deleteMessages();
 			System.out.println("varios mensajes offline->" + mensajes.size());
 		}for( Message msg:mensajes )
-			System.out.println(msg.getSubject());
+			System.out.println(msg.getBody());
 		return mensajes;
 	}
 
@@ -188,7 +194,8 @@ public class UtilidadesChat
 	public static void labelGenerator(String texto, Pos pos, String color) 
 	{
 		StackPane pane = new StackPane();
-		Text txt = new Text();
+		Text txt = new Text();//CodeArea ca = new CodeArea();ca.setF
+
 		HBox hbox = new HBox();
 
 		BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
@@ -197,7 +204,7 @@ public class UtilidadesChat
 
 		pane.getChildren().add(txt);
 		txt.setText(texto);
-		txt.setFont(Font.font("Verdana", 11));
+		txt.setFont(Font.loadFont("file:fonts/OpenSansEmoji.ttf", 16));
 
 		if (width > 150) 
 		{

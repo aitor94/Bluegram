@@ -101,5 +101,11 @@
 	<classpathentry kind="lib" path="lib/joda-time-2.4-sources.jar"/>
 	<classpathentry kind="lib" path="lib/joda-time-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/com.fasterxml.jackson.core.jar"/>
+	<classpathentry kind="lib" path="lib/controlsfx-8.40.10.jar"/>
+	<classpathentry kind="lib" path="lib/controlsfx-samples-8.40.10.jar"/>
+	<classpathentry kind="lib" path="lib/fxsampler-1.0.9.jar"/>
+	<classpathentry kind="lib" path="lib/Enzo-0.1.4-sources.jar"/>
+	<classpathentry kind="lib" path="lib/Enzo-0.1.4.jar"/>
+	<classpathentry kind="lib" path="lib/richtextfx-demos-fat-0.6.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

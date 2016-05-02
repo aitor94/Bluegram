@@ -127,7 +127,7 @@ public class ControladorRegistro implements Initializable
 					}
 					else
 					{
-						UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Las contrase�as no coinciden");
+						UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Las contraseñas no coinciden");
 						pass.setText("");
 						confPass.setText("");
 					}

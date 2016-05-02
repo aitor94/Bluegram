@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/smack lib"/>
-	<classpathentry kind="lib" path="lib/ValidationEJB2.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.28.jar"/>
 	<classpathentry kind="lib" path="lib/simplecaptcha-1.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/jboss-client.jar"/>
@@ -101,11 +100,10 @@
 	<classpathentry kind="lib" path="lib/joda-time-2.4-sources.jar"/>
 	<classpathentry kind="lib" path="lib/joda-time-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/com.fasterxml.jackson.core.jar"/>
-	<classpathentry kind="lib" path="lib/controlsfx-8.40.10.jar"/>
-	<classpathentry kind="lib" path="lib/controlsfx-samples-8.40.10.jar"/>
 	<classpathentry kind="lib" path="lib/fxsampler-1.0.9.jar"/>
 	<classpathentry kind="lib" path="lib/Enzo-0.1.4-sources.jar"/>
 	<classpathentry kind="lib" path="lib/Enzo-0.1.4.jar"/>
-	<classpathentry kind="lib" path="lib/richtextfx-demos-fat-0.6.10.jar"/>
+	<classpathentry kind="lib" path="lib/ValidationEJB.jar"/>
+	<classpathentry kind="lib" path="lib/controlsfx-8.40.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javax.naming.NamingException;
+
 import com.amazonaws.SDKGlobalConfiguration;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.event.ProgressEvent;
 import com.amazonaws.event.ProgressListener;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -24,19 +24,23 @@ import javafx.scene.control.ProgressIndicator;
 
 public class UtilidadesArchivos 
 {
-	private static final String BucketName  = "blue2222"; 
-	private static final String keyName = "AKIAJGZQWMMDCX2EZLFQ";
-    private static final String secret = "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";
+	private static final String BucketName  = "bluegram"; 
     
     public static String sendFile(String name,String path,ProgressIndicator pi)
     {
     	String nombre = name;
     	
-    	System.setProperty(SDKGlobalConfiguration.ENABLE_S3_SIGV4_SYSTEM_PROPERTY, "true");
-        
-    	AWSCredentials credentials = new BasicAWSCredentials(keyName,secret);
+    	UtilidadRegistro ur = new UtilidadRegistro();
     	
-	    AmazonS3Client s3Client = new AmazonS3Client(credentials);
+    	System.setProperty(SDKGlobalConfiguration.ENABLE_S3_SIGV4_SYSTEM_PROPERTY, "true");
+    	
+	    AmazonS3Client s3Client = null;
+		try {
+			s3Client = ur.busquedaEJB().getAmazonClient();
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    
 	    int count = 0;
 	    String cad = nombre;
@@ -71,8 +75,16 @@ public class UtilidadesArchivos
     {
     	System.setProperty(SDKGlobalConfiguration.ENABLE_S3_SIGV4_SYSTEM_PROPERTY, "true");
         
-    	AWSCredentials credentials = new BasicAWSCredentials(keyName,secret);
-	    AmazonS3Client s3Client = new AmazonS3Client(credentials);
+    	UtilidadRegistro ur = new UtilidadRegistro();
+    	
+	    AmazonS3Client s3Client = null;
+	    
+		try {
+			s3Client = ur.busquedaEJB().getAmazonClient();
+		} catch (NamingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 	    if(s3Client.doesObjectExist(BucketName,key))
 	    {	

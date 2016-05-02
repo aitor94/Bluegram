@@ -18,7 +18,7 @@ public class UtilidadRegistro
 		Properties prop = new Properties();
 		
 		prop.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory" );
-		prop.put(Context.PROVIDER_URL, "http-remoting://127.0.0.1:8080" );
+		prop.put(Context.PROVIDER_URL, "http-remoting://54.165.111.148:8080" );
 		prop.put(Context.SECURITY_PRINCIPAL,"aitor");
 		prop.put(Context.SECURITY_CREDENTIALS,"1234");
 		prop.put("jboss.naming.client.ejb.context", true);

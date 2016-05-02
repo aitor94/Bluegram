@@ -4,14 +4,11 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.fxmisc.richtext.StyledTextArea;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.chat.Chat;
 import org.jivesoftware.smack.chat.ChatManager;
 import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.util.StringUtils;
 
-import datos.Emoji;
 import datos.FicheroXML;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

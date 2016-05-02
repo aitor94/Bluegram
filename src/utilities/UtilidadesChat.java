@@ -9,11 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.InlineStyleTextArea;
-import org.fxmisc.richtext.StyleClassedTextArea;
-import org.fxmisc.richtext.StyledDocument;
-import org.fxmisc.richtext.StyledTextArea;
 import org.jivesoftware.smack.SmackException.NoResponseException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.SmackException.NotLoggedInException;
@@ -33,7 +28,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import modelo.Contacto;
 import vistaControlador.ControladorBotonDescarga;
 import vistaControlador.ControladorChat;
@@ -75,7 +69,7 @@ public class UtilidadesChat
 			{
 				case ("Online"): 
 				{
-					cc.setMensajes(UtilidadesConversacion.getOnlineHistory(new BD(),cc.getId(),cc.getId()));
+					cc.setMensajes(UtilidadesConversacion.getOnlineHistory(new BD(),cc.getId(),UtilidadesServidor.scon.getUser().split("/")[0]));
 					break;
 				}
 				case ("Local"): 

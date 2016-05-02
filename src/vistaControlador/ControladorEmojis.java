@@ -1,10 +1,7 @@
 package vistaControlador;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-
-import org.fxmisc.richtext.StyledTextArea;
 
 import datos.Emoji;
 import javafx.event.EventHandler;
@@ -14,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;

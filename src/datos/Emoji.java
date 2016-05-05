@@ -69,7 +69,7 @@ public enum Emoji
 		private byte[] codePoints;
 
 	    Emoji(byte... codePoints) {
-	        this.codePoints = codePoints;
+	        this.setCodePoints(codePoints);
 	        this.emoji = new String(codePoints, Charset.forName("UTF-8"));
 	    }
 	
@@ -81,4 +81,12 @@ public enum Emoji
 	    public String toString() {
 	        return getEmoji();
 	    }
+
+		public byte[] getCodePoints() {
+			return codePoints;
+		}
+
+		public void setCodePoints(byte[] codePoints) {
+			this.codePoints = codePoints;
+		}
 }

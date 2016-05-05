@@ -8,10 +8,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.naming.NamingException;
 
 import com.amazonaws.SDKGlobalConfiguration;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.event.ProgressEvent;
 import com.amazonaws.event.ProgressListener;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -34,13 +37,17 @@ public class UtilidadesArchivos
     	
     	System.setProperty(SDKGlobalConfiguration.ENABLE_S3_SIGV4_SYSTEM_PROPERTY, "true");
     	
-	    AmazonS3Client s3Client = null;
+    	List<String> lista = null;
 		try {
-			s3Client = ur.busquedaEJB().getAmazonClient();
-		} catch (NamingException e) {
+			lista = ur.busquedaEJB().getAmazonClient();
+			ur.closeConnection();
+		} catch (NamingException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
+    	
+    	AWSCredentials credentials = new BasicAWSCredentials(lista.get(0),lista.get(1));
+	    AmazonS3Client s3Client = new AmazonS3Client(credentials);
 	    
 	    int count = 0;
 	    String cad = nombre;
@@ -77,14 +84,17 @@ public class UtilidadesArchivos
         
     	UtilidadRegistro ur = new UtilidadRegistro();
     	
-	    AmazonS3Client s3Client = null;
-	    
+    	List<String> lista = null;
 		try {
-			s3Client = ur.busquedaEJB().getAmazonClient();
+			lista = ur.busquedaEJB().getAmazonClient();
+			ur.closeConnection();
 		} catch (NamingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+    	
+    	AWSCredentials credentials = new BasicAWSCredentials(lista.get(0),lista.get(1));
+	    AmazonS3Client s3Client = new AmazonS3Client(credentials);
 
 	    if(s3Client.doesObjectExist(BucketName,key))
 	    {	

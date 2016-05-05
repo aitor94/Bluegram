@@ -103,7 +103,7 @@
 	<classpathentry kind="lib" path="lib/fxsampler-1.0.9.jar"/>
 	<classpathentry kind="lib" path="lib/Enzo-0.1.4-sources.jar"/>
 	<classpathentry kind="lib" path="lib/Enzo-0.1.4.jar"/>
-	<classpathentry kind="lib" path="lib/ValidationEJB.jar"/>
 	<classpathentry kind="lib" path="lib/controlsfx-8.40.10.jar"/>
+	<classpathentry kind="lib" path="lib/ValidationEJB.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

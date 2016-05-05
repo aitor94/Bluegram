@@ -37,6 +37,7 @@ public class ControladorLogin implements Initializable
 	private Task<Void> task;
 
 	private static String user;
+	private int state;
 
 	public static String getUser() 
 	{
@@ -46,6 +47,8 @@ public class ControladorLogin implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
+		state = 0;
+		
 		String userpass[] = UtilidadesOtros.leerDeFichero();
 		if (userpass != null) 	
 		{
@@ -57,7 +60,33 @@ public class ControladorLogin implements Initializable
 			}
 		}
 
-		task = new Task<Void>() 
+		task = hiloLogin();
+		
+		conectar.setOnMouseClicked(new EventHandler<MouseEvent>() 
+		{
+			@Override
+			public void handle(MouseEvent event) 
+			{
+				task = hiloLogin();
+				iconoCargando.setVisible(true);
+				new Thread(task).start();
+			}
+		});
+
+		registrar.setOnMouseClicked(new EventHandler<MouseEvent>() 
+		{
+			@Override
+			public void handle(MouseEvent event) 
+			{
+				UtilidadesOtros.ventanaFXML("/vistaControlador/Registro.fxml", conectar.getScene());
+			}
+		});
+
+	}
+
+	public Task<Void> hiloLogin()
+	{
+		Task<Void> task = new Task<Void>() 
 		{
 			@Override
 			public Void call() 
@@ -97,16 +126,16 @@ public class ControladorLogin implements Initializable
 					}
 				}
 
-				catch (SmackException e) {e.printStackTrace();
-					UtilidadesOtros.alerta(AlertType.ERROR, "Error de conexion", "Error de conexion");
+				catch (SmackException e) {
+					state = 1;
 				}
 
-				catch (IOException e) {e.printStackTrace();
-					UtilidadesOtros.alerta(AlertType.ERROR, "Error inesperado", "Error inesperado");
+				catch (IOException e) {
+					state = 2;
 				}
 
-				catch (XMPPException e) {e.printStackTrace();
-					UtilidadesOtros.alerta(AlertType.ERROR, "Error de autenticacion", "Usuario o contrasena erroneos");
+				catch (XMPPException e) {
+					state = 3;
 				}
 				finally{
 					iconoCargando.setVisible(false);
@@ -114,36 +143,32 @@ public class ControladorLogin implements Initializable
 				return null;
 			}
 		};
-
+		
 		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() 
 		{
 			@Override
 			public void handle(WorkerStateEvent t) 
 			{
-				UtilidadesOtros.ventanaFXML("/vistaControlador/Chat.fxml", usuario.getScene());
+				switch(state)
+				{
+					case 0:
+						UtilidadesOtros.ventanaFXML("/vistaControlador/Chat.fxml", usuario.getScene());
+						break;
+					case 1:
+						UtilidadesOtros.alerta(AlertType.ERROR, "Error de conexion", "Error de conexion");
+						break;
+					case 2:
+						UtilidadesOtros.alerta(AlertType.ERROR, "Error inesperado", "Error inesperado");
+						break;
+					case 3:
+						UtilidadesOtros.alerta(AlertType.ERROR, "Error de autenticacion", "Usuario o contrasena erroneos");
+						break;
+				}
+				state = 0;
 				t.consume();
 			}
 		});
-
-		conectar.setOnMouseClicked(new EventHandler<MouseEvent>() 
-		{
-			@Override
-			public void handle(MouseEvent event) 
-			{
-				iconoCargando.setVisible(true);
-				new Thread(task).start();
-			}
-		});
-
-		registrar.setOnMouseClicked(new EventHandler<MouseEvent>() 
-		{
-			@Override
-			public void handle(MouseEvent event) 
-			{
-				UtilidadesOtros.ventanaFXML("/vistaControlador/Registro.fxml", conectar.getScene());
-			}
-		});
-
+		
+		return task;
 	}
-
 }

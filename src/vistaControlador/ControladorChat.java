@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.naming.NamingException;
+
 import org.controlsfx.control.Notifications;
 import org.jivesoftware.smack.SmackException.NoResponseException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
@@ -159,7 +161,12 @@ public class ControladorChat implements Initializable
 			@Override
 			public void handle(ActionEvent event) 
 			{
-				uc.anadirContacto();
+				try {
+					uc.anadirContacto();
+				} catch (NamingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				UtilidadesOtros.ventanaFXML("/vistaControlador/Chat.fxml", panelChat.getScene());
 				event.consume();
 			}
@@ -210,8 +217,9 @@ public class ControladorChat implements Initializable
 							contacto.setPresencia(null);
 							contacto.setNumMensajes(1);
 								
+							String nombre = contacto.getNombre();
 							Platform.runLater(() -> {
-								itemsContactos.add(chat.getParticipant()+" -> 1");
+								itemsContactos.add(nombre);
 								listaContactos.setItems(itemsContactos);
 							});
 						}
@@ -240,7 +248,7 @@ public class ControladorChat implements Initializable
 								
 							}
 							
-							stage = (Stage) panelChat.getScene().getWindow();
+							stage = (Stage) listaContactos.getScene().getWindow();
 							if(stage.isIconified())
 							{								
 								Notifications.create()

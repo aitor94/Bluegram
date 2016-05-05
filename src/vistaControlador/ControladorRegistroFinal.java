@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
+import server.EJBInterface;
 import utilities.UtilidadesOtros;
 import utilities.UtilidadesServidor;
 
@@ -36,6 +37,15 @@ public class ControladorRegistroFinal implements Initializable
 	private String name;
 	private String password;
 	private String email;
+	public EJBInterface getEjb() {
+		return ejb;
+	}
+
+	public void setEjb(EJBInterface ejb) {
+		this.ejb = ejb;
+	}
+
+	private EJBInterface ejb;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
@@ -45,36 +55,44 @@ public class ControladorRegistroFinal implements Initializable
 			@Override
 			public void handle(MouseEvent event) {
 				
-				if (code.equals(codigo.getText())) {
-					
-					XMPPTCPConnection con = UtilidadesServidor.ServerConnection("admin", "admin");
-					
-					try	{
-						con.connect();
-					} 
-					catch (SmackException | IOException | XMPPException e) {
-						UtilidadesOtros.alerta(AlertType.ERROR, "Error de conexion", "Error de conexion");
-					}
+				if (code.equals(codigo.getText())) 
+				{
+					if(ejb.validateUser(name,email)==1)
+					{
+						XMPPTCPConnection con = UtilidadesServidor.ServerConnection("admin", "admin");
 						
-					AccountManager am = AccountManager.getInstance(con);
-					
-					Map<String,String> attr = new HashMap<String,String>();
-					attr.put("email", email);
-					
-					try {
-						am.createAccount(name, password, attr);
-					} 
-					catch (NoResponseException | XMPPErrorException | NotConnectedException e) {
-						UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Error al crear cuenta");
+						try	
+						{
+							con.connect();
+						} 
+						catch (SmackException | IOException | XMPPException e) 
+						{
+							UtilidadesOtros.alerta(AlertType.ERROR, "Error de conexion", "Error de conexion");
+						}
+							
+						AccountManager am = AccountManager.getInstance(con);
+						
+						Map<String,String> attr = new HashMap<String,String>();
+						attr.put("email", email);
+						
+						try 
+						{
+							am.createAccount(name, password, attr);
+							UtilidadesOtros.alerta(AlertType.CONFIRMATION, "�Exito!", "�Registro completado con exito!");
+						} 
+						catch (NoResponseException | XMPPErrorException | NotConnectedException e) 
+						{
+							UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Error al crear cuenta");
+						}	
 					}
-					
-					UtilidadesOtros.alerta(AlertType.CONFIRMATION, "�Exito!", "�Registro completado con exito!");
-					UtilidadesOtros.ventanaFXML("/vistaControlador/Principal.fxml", boton.getScene());
-					
+					else
+						UtilidadesOtros.alerta(AlertType.ERROR, "Error", "Error durante el registro, vuelva a intentar");
 				}
-				else {
+				else 
+				{
 					UtilidadesOtros.alerta(AlertType.ERROR, "Fallo de autenticacion", "�La clave no es correcta!");
 				}
+				UtilidadesOtros.ventanaFXML("/vistaControlador/Login.fxml", boton.getScene());
 			}
 		});
 	}

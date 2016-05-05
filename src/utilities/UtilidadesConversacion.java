@@ -11,7 +11,7 @@ import datos.FicheroXML;
 
 public class UtilidadesConversacion 
 {
-	public static List<Message> getOnlineHistory(BD bd, String from, String to) {
+	public static List<Message> getOnlineHistory(String from, String to) {
 		List<bD.MessageArchive> lista = new ArrayList<bD.MessageArchive>();
 		List<Message> msg = new ArrayList<Message>();
 		boolean check = false;
@@ -21,6 +21,7 @@ public class UtilidadesConversacion
 		try 
 		{
 			lista = ur.busquedaEJB().getOnlineMessages(from,to);
+			ur.closeConnection();
 		} 
 		catch (NamingException e) 
 		{

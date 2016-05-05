@@ -26,7 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -48,7 +48,7 @@ import utilities.UtilidadesServidor;
 
 public class ControladorConversacion extends Contacto implements Initializable
 {
-	@FXML private TextArea texto;
+	@FXML private TextField texto;
 	@FXML private Button enviar;
 	@FXML private Button emoticonos;
 	@FXML private Label contacto;
@@ -81,7 +81,7 @@ public class ControladorConversacion extends Contacto implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{	
-		texto.setFont(Font.loadFont("file:fonts/OpenSansEmoji.ttf", 16));
+		texto.setFont(Font.loadFont("file:fonts/OpenSansEmoji.ttf", 13));
 
 		enviar.setOnMouseClicked(new EventHandler<MouseEvent>() 
 		{
@@ -100,7 +100,6 @@ public class ControladorConversacion extends Contacto implements Initializable
 			public void handle(MouseEvent event) 
 			{
 				stage = new Stage();
-				//Scene scene = UtilidadesOtros.escenaFXML("/vistaControlador/Emoticonos.fxml");
 				Scene scene = null;
 
 				try 
@@ -175,7 +174,7 @@ public class ControladorConversacion extends Contacto implements Initializable
 	                filePath = file.getAbsolutePath();
 	                
 	                txt.setText("Enviando "+file.getName());
-	                txt.setFont(Font.loadFont("file:fonts/OpenSansEmoji.ttf", 14));
+	                txt.setFont(Font.loadFont("file:fonts/OpenSansEmoji.ttf", 13));
 	                
 	                hb.getChildren().add(pi);
 	                hb.getChildren().add(txt);
@@ -284,12 +283,12 @@ public class ControladorConversacion extends Contacto implements Initializable
 		this.contacto = contacto;
 	}
 
-	public TextArea getTexto() 
+	public TextField getTexto() 
 	{
 		return texto;
 	}
 
-	public void setTexto(TextArea texto) 
+	public void setTexto(TextField texto) 
 	{
 		this.texto = texto;
 	}

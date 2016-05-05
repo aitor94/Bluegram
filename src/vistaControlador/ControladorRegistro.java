@@ -19,7 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import nl.captcha.Captcha;
-import utilities.BD;
+import server.EJBInterface;
 import utilities.UtilidadRegistro;
 import utilities.UtilidadesOtros;
 
@@ -76,13 +76,12 @@ public class ControladorRegistro implements Initializable
 							try 
 							{
 								UtilidadRegistro ur = new UtilidadRegistro();
+								EJBInterface ejb = ur.busquedaEJB();
 								
-								if(ur.busquedaEJB().validateEmail(correo.getText()))
-								{
-									BD bd = new BD();
-									
-									if (bd.buscaUsuario(nombre.getText()) == false)
-									{
+								if(ejb.validateEmail(correo.getText()))
+								{									
+									if (ejb.validateUser(nombre.getText(),correo.getText()) == 1)
+									{										
 										FXMLLoader loader = new FXMLLoader();
 										loader.setLocation(ControladorRegistro.class.getResource("/vistaControlador/RegistroFinal.fxml"));
 										AnchorPane ap = loader.load();
@@ -91,11 +90,10 @@ public class ControladorRegistro implements Initializable
 										ControladorRegistroFinal ctrl = loader.getController();
 										ctrl.setCode(ur.busquedaEJB().sendEmail(correo.getText()));
 										
-										ur.closeConnection();
-										
 										ctrl.setName(nombre.getText());
 										ctrl.setPassword(pass.getText());
 										ctrl.setEmail(correo.getText());
+										ctrl.setEjb(ejb);
 										
 										Stage stg = (Stage) boton.getScene().getWindow();
 										stg.setScene(escena);
@@ -104,10 +102,10 @@ public class ControladorRegistro implements Initializable
 									else
 									{
 										UtilidadesOtros.alerta(AlertType.ERROR, "Error", 
-												"Ya existe un usuario con ese nombre, prueba con otro");
+												"Ya existe un usuario con ese nombre o correo, prueba con otro");
 										nombre.setText("");
+										correo.setText("");
 									}
-									bd.cerrarConexion();
 								}
 								else
 								{

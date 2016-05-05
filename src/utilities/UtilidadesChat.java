@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.naming.NamingException;
+
 import org.jivesoftware.smack.SmackException.NoResponseException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
 import org.jivesoftware.smack.SmackException.NotLoggedInException;
@@ -69,7 +71,7 @@ public class UtilidadesChat
 			{
 				case ("Online"): 
 				{
-					cc.setMensajes(UtilidadesConversacion.getOnlineHistory(new BD(),cc.getId(),UtilidadesServidor.scon.getUser().split("/")[0]));
+					cc.setMensajes(UtilidadesConversacion.getOnlineHistory(cc.getId(),UtilidadesServidor.scon.getUser().split("/")[0]));
 					break;
 				}
 				case ("Local"): 
@@ -84,8 +86,10 @@ public class UtilidadesChat
 		return contactos;
 	}
 
-	public void anadirContacto() 
+	public void anadirContacto() throws NamingException 
 	{
+		UtilidadRegistro ur = new UtilidadRegistro();
+		
 		Roster roster = Roster.getInstanceFor(UtilidadesServidor.scon);
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle("Añadir contacto");
@@ -93,7 +97,10 @@ public class UtilidadesChat
 
 		Optional<String> result = dialog.showAndWait();
 
-		if (new BD().buscaUsuario(result.get())) {
+		int validation = ur.busquedaEJB().validateUser(result.get());
+		ur.closeConnection();
+		
+		if (validation == 0) {
 			try {
 				roster.createEntry(result.get(), result.get(), null);
 				roster.reload();
@@ -106,13 +113,15 @@ public class UtilidadesChat
 			} catch (NotLoggedInException e) {
 				System.out.println("Error de no logeado");
 			}
-
 		} 
-		else 
-		{
+		if(validation ==1)
+		{	
 			UtilidadesOtros.alerta(AlertType.INFORMATION, "Aviso",
 					"El usuario introducido no esta registrado en la aplicacion");
 		}
+		if(validation == 2)
+			UtilidadesOtros.alerta(AlertType.ERROR, "Error",
+					"Error de conexion");
 	}
 
 	public void eliminarContacto(String string) 
@@ -188,7 +197,7 @@ public class UtilidadesChat
 	public static void labelGenerator(String texto, Pos pos, String color) 
 	{
 		StackPane pane = new StackPane();
-		Text txt = new Text();//CodeArea ca = new CodeArea();ca.setF
+		Text txt = new Text();
 
 		HBox hbox = new HBox();
 
@@ -198,7 +207,7 @@ public class UtilidadesChat
 
 		pane.getChildren().add(txt);
 		txt.setText(texto);
-		txt.setFont(Font.loadFont("file:fonts/OpenSansEmoji.ttf", 16));
+		txt.setFont(Font.loadFont("file:fonts/OpenSansEmoji.ttf", 13));
 
 		if (width > 150) 
 		{

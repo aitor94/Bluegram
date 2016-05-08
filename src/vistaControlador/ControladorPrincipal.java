@@ -101,7 +101,7 @@ public class ControladorPrincipal implements Initializable
 
 			@Override
 			public void handle(MouseEvent event) {
-
+				UtilidadesOtros.ventanaFXML("/vistaControlador/SobreNosotros.fxml", panel_about.getScene());
 			}
 		});
 		

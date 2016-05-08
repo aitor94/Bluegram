@@ -10,6 +10,7 @@ import org.jivesoftware.smack.chat.ChatManager;
 import org.jivesoftware.smack.packet.Message;
 
 import datos.FicheroXML;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
@@ -66,6 +67,10 @@ public class ControladorConversacion extends Contacto implements Initializable
 	    if (event.getCode() == KeyCode.ENTER) 
 	    {
 	    	texto.clear();
+	    	Platform.runLater(() -> 
+			{
+				texto.requestFocus();
+			});
 	    }
 	}
 	
@@ -90,6 +95,11 @@ public class ControladorConversacion extends Contacto implements Initializable
 			{
 				enviarMensaje();
 				texto.clear();
+				
+				Platform.runLater(() -> 
+				{
+					texto.requestFocus();
+				});
 			}
 
 		});

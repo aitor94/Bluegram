@@ -38,7 +38,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <TextField fx:id="texto" layoutX="14.0" layoutY="327.0" prefHeight="27.0" prefWidth="223.0" />
+            <TextField fx:id="texto" layoutX="14.0" layoutY="327.0" onKeyPressed="#handleEnterPressed" onKeyReleased="#handleEnterReleased" prefHeight="27.0" prefWidth="223.0" />
       </children>
     </Pane>
   </children>

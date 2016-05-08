@@ -18,6 +18,17 @@ public class ControladorBotonDescarga implements Initializable
 {
 	@FXML private HBox hbox;
 	@FXML private Text text;
+	
+	public Text getText() {
+		return text;
+	}
+
+
+	public void setText(String text) {
+		this.text.setText(text);
+	}
+
+
 	@FXML private Button boton;
 	
 	private ProgressIndicator progressIndicator;

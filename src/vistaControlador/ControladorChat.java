@@ -243,19 +243,19 @@ public class ControladorChat implements Initializable
 									uc.downloadGenerator(message.getSubject().split("/")[1],message.getBody());
 								}
 							}
-							else
-							{
-								
-							}
 							
 							stage = (Stage) listaContactos.getScene().getWindow();
-							if(stage.isIconified())
-							{								
-								Notifications.create()
-									.position(Pos.TOP_RIGHT)
-									.title("Mensaje recibido de "+chat.getParticipant().split("@")[0])
-									.text(message.getBody())
-									.showInformation();
+							
+							if(stage!=null)
+							{
+								if(stage.isIconified())
+								{								
+									Notifications.create()
+										.position(Pos.TOP_RIGHT)
+										.title("Mensaje recibido de "+chat.getParticipant().split("@")[0])
+										.text(message.getBody())
+										.showInformation();
+								}
 							}
 						});
 					}

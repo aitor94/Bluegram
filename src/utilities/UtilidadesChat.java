@@ -234,7 +234,7 @@ public class UtilidadesChat
 	}
 	
 	public void downloadGenerator(String name, String key)
-	{
+	{	
 		FXMLLoader loader = new FXMLLoader(getClass()
 				.getResource("/vistaControlador/Descarga.fxml"));
 	
@@ -244,6 +244,7 @@ public class UtilidadesChat
 			ControladorBotonDescarga cbd = loader.getController();
 			cbd.setName(name);
 			cbd.setKey(key);
+			cbd.setText(name);
 		} 
 		catch (IOException e) 
 		{

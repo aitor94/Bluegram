@@ -65,8 +65,8 @@ public class ControladorPrincipal implements Initializable
 		// evento ventana registro
 
 			@Override
-			public void handle (MouseEvent event) {
-				
+			public void handle (MouseEvent event) 
+			{				
 				UtilidadesOtros.ventanaFXML("/vistaControlador/Registro.fxml", panel_comienzo.getScene());
 			}		
 		});

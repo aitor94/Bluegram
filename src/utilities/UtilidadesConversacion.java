@@ -14,7 +14,6 @@ public class UtilidadesConversacion
 	public static List<Message> getOnlineHistory(String from, String to) {
 		List<bD.MessageArchive> lista = new ArrayList<bD.MessageArchive>();
 		List<Message> msg = new ArrayList<Message>();
-		boolean check = false;
 
 		UtilidadRegistro ur = new UtilidadRegistro();
 		
@@ -28,31 +27,19 @@ public class UtilidadesConversacion
 			e.printStackTrace();
 		}
 
-		for (bD.MessageArchive ma : lista) {
+		System.out.println(lista.size());
+		
+		for (bD.MessageArchive ma : lista) 
+		{
 			Message ms = new Message();
-			check = false;
-			if (ma.getFromJID().matches(from) && ma.getToJID().matches(to)) {
-				ms.setBody(ma.getBody());
-				ms.setFrom(ma.getFromJID());
-				ms.setTo(ma.getToJID());
-				ms.setSubject("txt");
-				check = true;
-			} else {
-				if (ma.getToJID().matches(from) && ma.getFromJID().matches(to)) {
-					ms.setBody(ma.getBody());
-					ms.setFrom(ma.getFromJID());
-					ms.setTo(ma.getToJID());
-					ms.setSubject("txt");
-					check = true;
-				}
-				else
-					check=false;
-			}
-			if (check)
-				msg.add(ms);
-			check = false;
+			ms.setSubject("txt");
+			ms.setBody(ma.getBody());
+			ms.setFrom(ma.getFromJID());
+			ms.setTo(ma.getToJID());
+			
+			msg.add(ms);
 		}
-		FicheroXML.escribeFichero(msg, to.split("@")[0]);
+		FicheroXML.escribeFichero(msg,UtilidadesServidor.scon.getUser().split("@")[0] +from.split("@")[0]);
 		return msg;
 	}
 }
